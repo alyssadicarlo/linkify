@@ -11,11 +11,12 @@ const es6renderer = require('express-es6-template-engine');
 app.engine('html', es6renderer);
 app.set('views', './views');
 app.set('view engine', 'html');
+app.use(express.static('public'));
 
 const server = http.createServer(app);
 
 server.listen(port, hostname, () => {
-    console.log()
+    console.log(`Server running at http://${hostname}:${port}`);
 });
 
 const rootController = require('./routes/index');
