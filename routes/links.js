@@ -16,8 +16,8 @@ router.get("/dashboard", async (req,res)=>{
     res.render("template", {
         locals: {
             title: "Dashboard",
-            //is_logged_in: req.session.is_logged_in,
-            //user_first_name: req.session.first_name
+            is_logged_in: req.session.is_logged_in,
+            user_first_name: req.session.first_name
         },
         partials: {
             body: "partials/dashboard"
@@ -28,45 +28,67 @@ router.get("/dashboard", async (req,res)=>{
 //POST add
 router.post("/add", async (req,res)=>{
     //get link URL from input form
-    const {url} = req.body;
+    const {target_url} = req.body;
     //get user ID (if no user id from session, uID = 0)
-    if(!!req.session.userID)
+    let userID = null;
+    console.log(req.session.user_id);
+    if(req.session.is_logged_in === true)
     {
-        const userID = req.session.userID;
+        userID = req.session.user_id;
     }
     else
     {
-        const userID = 1;
+        userID = 1;
     }
     
     //create UUID for link
     const uuid = nanoid(7);
 
-    //Create new link
-    const link = new LinkModel(null, userID, uuid, null, url, null, null, null);
     //Run addLink function of link model
-    link.addLink(userID, uuid, url);
+    const response = await LinkModel.addLink(userID, uuid, target_url);
+    
+})
+
+//POST custom_add
+router.post("/custom_add", async (req,res)=>{
+    //get link URL from input form
+    const {target_url} = req.body;
+    //get user ID (if no user id from session, uID = 0)
+    let userID = null;
+    if(!!req.session.userID)
+    {
+        userID = req.session.userID;
+    }
+    else
+    {
+        userID = 1;
+    }
+    
+    //create UUID for link
+    const uuid = nanoid(7);
+
+    //Run addLink function of link model
+    LinkModel.addLink(userID, uuid, target_url);
     
 })
 
 //POST update
 router.post("/update", async (req,res)=>{
-    //get custom link value
-    //get targetURL
-    //get title value
-    
-    //Create new link
+    //get id, custom link value, targetURL, and title
+    const { id, custom_url, target_url, title} = req.body;
     //Run updateLink function of link model
+    const response = await LinkModel.updateLink(id, custom_url, target_url, title);
+    res.redirect('/');
 })
 
 //POST delete
 router.post("/delete", async (req,res)=>{
     //Get link ID to delete
-    
-    //Create new link
+    const { id } = req.body;
     //Run deleteLink function of link model
+    const response = await LinkModel.deleteLink(id)
+    res.redirect('/')
 })
-
 
 
 
