@@ -1,9 +1,32 @@
 .flex {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
-.full-height {
-    height: calc(100vh - 66px);
+@media screen and (max-width: 768px) {
+    .reverse {
+        flex-direction: column-reverse;
+    }
+
+    .m-5 {
+        margin: 0 !important;
+        padding-top: 16px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    #generate_link {
+        flex-direction: column;
+    }
+
+    #generate_link input {
+        margin-right: 0 !important;
+    }
+
+    #generate_link button {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 4px;
+    }
 }
