@@ -11,10 +11,11 @@ CREATE TABLE links(
     id serial PRIMARY KEY,
     userID integer REFERENCES users(id),
     uuid text,
-    custom_link text,
+    custom_link text default NULL,
     target_url varchar(2000),
-    title varchar(200),
+    title varchar(200) default NULL,
     date_added datetime default now(),
-    click_count integer default 0
+    click_count integer default 0,
+    UNIQUE(custom_link)
 );
 
