@@ -2,7 +2,7 @@
 
 //imports
 const express = require("express");
-const UserModel = require("../models/Users");
+const LinkModel = require("../models/Links");
 
 //create a router 
 const router = express.Router();
@@ -46,7 +46,9 @@ router.post("update", async (req,res)=>{
 //POST delete
 router.post("delete", async (req,res)=>{
     //Get link ID to delete
-    
+    const { id } = req.body;
+    const response = await LinkModel.deleteLink(id)
+    res.redirect('/')
     //Create new link
     //Run deleteLink function of link model
 })
