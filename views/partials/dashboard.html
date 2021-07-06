@@ -6,7 +6,7 @@
                 Create New
             </button>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search links" aria-label="Search">
+                <input class="form-control me-2" name="search" type="search" placeholder="Search links" aria-label="Search">
                 <button class="btn btn-outline-primary" type="submit">Search</button>
             </form>
         </div>
@@ -27,13 +27,13 @@
         <div class="modal-body">
             <form action="/links/custom_add" method="POST">
               <label for="title">Title</label>
-              <input name="title" id="title" type="text" class="form-control me-1" placeholder="Enter title">
-              <label>Link to shorten
-                <input name="target_url" type="text" class="form-control me-1" placeholder="Enter link to shorten">
+              <input name="title" id="title" type="text" class="form-control mb-1" placeholder="Enter title">
+              <label for="target_url">Link to shorten</label>
+              <input name="target_url" id="target_url" type="text" class="form-control mb-1" placeholder="Enter link to shorten">
+              <label class="d-flex align-items-center mb-3"> https://linkify.com/
+                <input name="custom_link" type="text" class="form-control ms-1" placeholder="your_custom_link">
               </label>
-              <label> https://linkify.com/
-                <input name="custom_link" type="text" class="form-control me-1" placeholder="Enter custom link">
-              </label>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary ms-1">Generate</button>
             </form>
         </div>
