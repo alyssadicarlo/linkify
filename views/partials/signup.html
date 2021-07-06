@@ -1,5 +1,5 @@
 <h1>Sign Up</h1>
-<form action="/login" method="POST">
+<form action="/users/signup" method="POST">
     <div class="mb-3">
         <label for="first_name" class="form-label">First Name</label>
         <input name="first_name" type="text" class="form-control" id="first_name">
@@ -18,8 +18,8 @@
       <input name="password" type="password" class="form-control" id="password">
     </div>
     <div class="mb-3">
-      <label for="confirm_password" class="form-label">Confirm Password</label>
-      <input name="confirm_password" type="password" class="form-control" id="confirm_password">
+      <label for="password_confirm" class="form-label">Confirm Password</label>
+      <input name="password_confirm" type="password" class="form-control" id="password_confirm">
     </div>
     <button type="submit" class="btn btn-primary">Sign Up</button>
 </form>
