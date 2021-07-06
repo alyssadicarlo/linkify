@@ -28,7 +28,31 @@ router.get("/dashboard", async (req,res)=>{
 //POST add
 router.post("/add", async (req,res)=>{
     //get link URL from input form
-    const { target_url } = req.body;
+    const {target_url} = req.body;
+    //get user ID (if no user id from session, uID = 0)
+    let userID = null;
+    console.log(req.session.user_id);
+    if(req.session.is_logged_in === true)
+    {
+        userID = req.session.user_id;
+    }
+    else
+    {
+        userID = 1;
+    }
+    
+    //create UUID for link
+    const uuid = nanoid(7);
+
+    //Run addLink function of link model
+    const response = await LinkModel.addLink(userID, uuid, target_url);
+    
+})
+
+//POST custom_add
+router.post("/custom_add", async (req,res)=>{
+    //get link URL from input form
+    const {target_url} = req.body;
     //get user ID (if no user id from session, uID = 0)
     let userID = null;
     if(!!req.session.userID)
@@ -44,8 +68,13 @@ router.post("/add", async (req,res)=>{
     const uuid = nanoid(7);
 
     //Run addLink function of link model
+<<<<<<< HEAD
     const response = await LinkModel.addLink(userID, uuid, target_url);
 
+=======
+    LinkModel.addLink(userID, uuid, target_url);
+    
+>>>>>>> main
 })
 
 //POST update
@@ -65,7 +94,6 @@ router.post("/delete", async (req,res)=>{
     const response = await LinkModel.deleteLink(id)
     res.redirect('/')
 })
-
 
 
 
