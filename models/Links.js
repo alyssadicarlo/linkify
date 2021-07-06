@@ -15,6 +15,7 @@ class LinksModel {
         this.click_count = click_count;
     }
 
+    //Method to retrieve all links for a specific user
     static async getAll(userID) {
         try {
             const response = await db.any(
@@ -29,7 +30,23 @@ class LinksModel {
         }
     }
 
-    static async addLink(userID, uuid, custom_link, target_url, title) {
+    //Method to retrieve all links for user and sort by user parameter
+    static async getBy(userID, parameter) {
+        try {
+            const response = await db.any(
+                `SELECT * FROM links
+                WHERE userID = ${userID}
+                ORDER by '${parameter}';`
+            )
+            return response;
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
+    //Method to create custom link while logged in
+    static async addCustomLink(userID, uuid, custom_link, target_url, title) {
         try {
             const query = `
                 INSERT INTO links 
@@ -44,6 +61,23 @@ class LinksModel {
         }
     }
 
+    //Method to add link without being logged in
+    static async addLink(uuid, target_url) {
+        try {
+            const query = `
+                INSERT INTO links 
+                    (uuid, target_url)
+                VALUES
+                ('${uuid}', '${target_url}');`
+            const response = await db.one(query);
+            return response;
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
+    //Method to update existing custom link
     static async updateLink(id, custom_link, target_url, title) {
         try {
             const query = `
@@ -60,6 +94,7 @@ class LinksModel {
         }
     }
 
+    //Method to increment click count
     static async updateClicks(id) {
         try {
             const response = await db.result(`
@@ -75,6 +110,7 @@ class LinksModel {
         }
     }
 
+    //Method to delete a saved link
     static async deleteLink(id) {
         try {
             const response = await db.result(
