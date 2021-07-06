@@ -53,7 +53,7 @@ router.post("/login", async (req,res)=>{
 
     if(response.isValid)
     {
-        const {isValid, user_id, first_name, last_name} = response;
+        const {isValid, user_id, first_name, last_name, email} = response;
         req.session.is_logged_in = isValid;
         req.session.user_id = user_id;
         req.session.first_name = first_name;
