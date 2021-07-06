@@ -53,7 +53,7 @@ class LinksModel {
                     (userID, uuid, custom_link, target_url, title)
                 VALUES
                 (${userID}, '${uuid}', '${custom_link}', '${target_url}', '${title}');`
-            const response = await db.one(query);
+            const response = await db.result(query);
             return response;
         } catch(error) {
             console.error("ERROR: ", error);
@@ -69,7 +69,7 @@ class LinksModel {
                     (userID, uuid, target_url)
                 VALUES
                 ('${userID}','${uuid}', '${target_url}');`
-            const response = await db.one(query);
+            const response = await db.result(query);
             return response;
         } catch(error) {
             console.error("ERROR: ", error);
