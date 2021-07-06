@@ -1,0 +1,9 @@
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.full-height {
+    height: calc(100vh - 66px);
+}
