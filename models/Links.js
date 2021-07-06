@@ -62,13 +62,13 @@ class LinksModel {
     }
 
     //Method to add link without being logged in
-    static async addLink(uuid, target_url) {
+    static async addLink(userID, uuid, target_url) {
         try {
             const query = `
                 INSERT INTO links 
-                    (uuid, target_url)
+                    (userID, uuid, target_url)
                 VALUES
-                ('${uuid}', '${target_url}');`
+                ('${userID}','${uuid}', '${target_url}');`
             const response = await db.one(query);
             return response;
         } catch(error) {

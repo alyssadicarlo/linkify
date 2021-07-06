@@ -1,6 +1,7 @@
+'use strict';
 //imports
 const express = require("express");
-const UserModel = require("../models/USERS");
+const UserModel = require("../models/Users");
 const bcrypt = require("bcryptjs");
 
 //create a router
@@ -94,4 +95,5 @@ router.post("/signup", async (req,res)=>{
     }
 })
 
+//export the router for use in the app
 module.exports = router;
