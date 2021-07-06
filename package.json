@@ -1,7 +1,7 @@
 {
   "name": "linkify",
   "version": "1.0.0",
-  "description": "",
+  "description": "A full stack web application to shorten urls inspired by bitly.com",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -20,5 +20,13 @@
     "node-fetch": "^2.6.1",
     "pg-promise": "^10.10.2",
     "slugify": "^1.5.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natelee3/linkify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/natelee3/linkify/issues"
+  },
+  "homepage": "https://github.com/natelee3/linkify#readme"
 }
