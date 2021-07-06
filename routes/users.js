@@ -93,3 +93,5 @@ router.post("/signup", async (req,res)=>{
         return;
     }
 })
+
+module.exports = router;
