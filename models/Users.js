@@ -23,7 +23,7 @@ class UsersModel {
             INSERT INTO users
                 (first_name, last_name, email, password)
             VALUES
-                ('${first_name}','${last_name}''${email}','${password}') RETURNING id;`;
+                ('${first_name}','${last_name}','${email}','${password}') RETURNING id;`;
             const response = await db.one(query);
             return response;
         } catch (error) {
