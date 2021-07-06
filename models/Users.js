@@ -44,7 +44,6 @@ class UsersModel {
             } else {
                 return {isValid}
             }
-            // return response;
         } catch (error) {
             console.error('ERROR: ', error);
             return error;
