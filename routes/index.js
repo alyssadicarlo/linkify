@@ -18,7 +18,7 @@ router.get('/:redirect?', async (req, res) => {
         //Find the user associated with this uuid
         const thisUser = await LinkModel.findUser(req.params.redirect);
         //Increment the user's total clicks by one
-        const addTotal = await UserModel.updateTotalClicks(thisUser);
+        const addTotal = await UserModel.updateTotalClicks(thisUser.userid);
         console.log(targetURL);
         res.redirect("http://" + targetURL.target_url);
         //res.redirect(targetURL.target_url);

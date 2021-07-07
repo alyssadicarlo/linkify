@@ -55,7 +55,7 @@ class UsersModel {
             const response = await db.result(`
                 UPDATE users
                 SET total_clicks = total_clicks + 1
-                WHERE userID = ${user_id};`
+                WHERE id = ${user_id};`
             )
         return response;
 
