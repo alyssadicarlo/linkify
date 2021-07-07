@@ -55,7 +55,8 @@ ${link_data.map(link =>
           <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
         </div>
         <div class="col-2">
-          <a href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>
+          <a class="customLink" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>
+          <button class="btn btn-outline-primary copyButton" id="${link.id}">Copy</button>
         </div>
         <div class="col-2">
           ${link.date_added}
@@ -70,7 +71,7 @@ ${link_data.map(link =>
         </button>
         <form action="/links/delete" method="POST">
           <input type="hidden" name="id" value="${link.id}">
-          <button type="submit" class="btn btn-outline-primary">Delete</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       </div>
     </div>
@@ -124,3 +125,4 @@ ${link_data.map(link =>
 :
 `<h1>Please login to view this page!</h1>`
 }
+<script src="/js/dashboard.js"></script>
