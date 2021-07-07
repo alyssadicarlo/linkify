@@ -95,12 +95,12 @@ class LinksModel {
     }
 
     //Method to increment click count
-    static async updateClicks(id) {
+    static async updateClicks(uuid) {
         try {
             const response = await db.result(`
                 UPDATE links
                 SET click_count = click_count + 1
-                WHERE id = ${id};`
+                WHERE uuid = '${uuid}';`
             )
         return response;
 
@@ -123,7 +123,7 @@ class LinksModel {
         }
     }
 
-    static async searchLinks(parameter, user_id) {
+    static async searchLinks(parameter, user_id, sort) {
         try {
             const query = `
                 SELECT * FROM links
@@ -141,10 +141,10 @@ class LinksModel {
         try {
             const query = `
                 SELECT target_url FROM links
-                WHERE uuid = ${uuid} 
-                OR custom_link = ${uuid}
-                returning target_url;
+                WHERE uuid = '${uuid}'
+                OR custom_link = '${uuid}';
                 `
+
             const response = await db.one(query);
             return response;
         } catch(error) {

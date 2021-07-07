@@ -9,17 +9,21 @@ const {nanoid} = require("nanoid");
 //create a router 
 const router = express.Router();
 
+
 //GET dashboard
-router.get("/dashboard/:search?", async (req,res)=>{
+router.get("/dashboard/:search?:sort?", async (req,res)=>{
 
     //render dashboard page
     console.log(req.query.search);
+    console.log(req.query.sort);
+
     //console.log(linkData);
     if(!!req.query.search)
     {
-        console.log(req.query.search);
+        //console.log(req.query.search);
+        
         //pass links data (date added by default)
-        const linkData = await LinkModel.searchLinks(req.query.search, req.session.user_id);
+        const linkData = await LinkModel.searchLinks(req.query.search, req.session.user_id, req.query.sort);
         console.log(linkData);
         res.render("template", {
             locals: {
@@ -36,9 +40,9 @@ router.get("/dashboard/:search?", async (req,res)=>{
     else
     {
         //pass links data (date added by default)
-        console.log("no search");
+        console.log("no search or sort");
         const user_id = await req.session.user_id
-        const linkData = await LinkModel.getBy(user_id, 'date_added');
+        const linkData = await LinkModel.getBy(user_id, req.query.sort);
         res.render("template", {
             locals: {
                 title: "Dashboard",
