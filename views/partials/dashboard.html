@@ -7,8 +7,9 @@ ${!!is_logged_in ?
                 Create New
             </button>
             <form class="d-flex">
-                <input class="form-control me-2" name="search" type="search" placeholder="Search links" aria-label="Search">
+                <input class="form-control me-2" name="search" type="search" placeholder="Search target url" aria-label="Search">
                 <select name="sort" class="form-select" aria-label="Default select example">
+                  <option selected disabled>Sort by</option>
                   <option value="title">Title</option>
                   <option value="date_added" selected>Date Added</option>
                   <option value="click_count">Click Count</option>
@@ -78,7 +79,7 @@ ${link_data.map(link =>
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateModalLabel">Update Link</h5>
+          <h5 class="modal-title" id="updateModalLabel">${link.target_url}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -86,8 +87,6 @@ ${link_data.map(link =>
             <input type="hidden" name="id" value="${link.id}">
             <label for="title">Title</label>
             <input name="title" id="title" type="text" class="form-control mb-1" value="${link.title}">
-            <label for="target_url">Link to shorten</label>
-            <input name="target_url" id="target_url" type="text" class="form-control mb-1" value="${link.target_url}">
             <label class="d-flex align-items-center mb-3"> https://linkify.com/
               <input name="custom_url" type="text" class="form-control ms-1" value="${link.custom_link}">
             </label>
