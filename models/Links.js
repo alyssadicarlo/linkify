@@ -36,7 +36,7 @@ class LinksModel {
             const response = await db.any(
                 `SELECT * FROM links
                 WHERE userID = ${userID}
-                ORDER by '${parameter}';`
+                ORDER by ${parameter};`
             )
             return response;
         } catch(error) {
