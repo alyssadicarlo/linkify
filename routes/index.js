@@ -5,13 +5,13 @@ const router = express.Router();
 const LinkModel = require("../models/Links");
 
 //route for home page and redirect
-router.get('/:redirect?', (req, res) => {
+router.get('/:redirect?', async (req, res) => {
     //if there is a redirect
     if(!!req.params.redirect)
     {
         console.log(req.params.redirect);
         //get target URL
-        const targetURL = LinkModel.getTargetURL(req.params.redirect);
+        const targetURL = await LinkModel.getTargetUrl(req.params.redirect);
         res.redirect(targetURL);
     }
     else

@@ -95,12 +95,12 @@ class LinksModel {
     }
 
     //Method to increment click count
-    static async updateClicks(id) {
+    static async updateClicks(uuid) {
         try {
             const response = await db.result(`
                 UPDATE links
                 SET click_count = click_count + 1
-                WHERE id = ${id};`
+                WHERE uuid = '${uuid}';`
             )
         return response;
 
@@ -123,17 +123,33 @@ class LinksModel {
         }
     }
 
-    static async searchLinks(parameter, user_id) {
-        try {
-            const query = `
-                SELECT * FROM links
-                WHERE userID = ${user_id}
-                AND target_url LIKE '%${parameter}%';
-                `
-            const response = await db.any(query);
-            return response;
-        } catch(error) {
-            console.log("ERROR: ", error);
+    static async searchLinks(search, user_id, sort) {
+        if (!!sort) {
+            try {
+                const query = `
+                    SELECT * FROM links
+                    WHERE userID = ${user_id}
+                    AND target_url LIKE '%${search}%'
+                    ORDER by '${sort}';
+                    `
+                const response = await db.any(query);
+                return response;
+            } catch(error) {
+                console.log("ERROR: ", error);
+            }
+        } else {
+            try {
+                const query = `
+                    SELECT * FROM links
+                    WHERE userID = ${user_id}
+                    AND target_url LIKE '%${parameter}%'
+                    ORDER by date_added;
+                    `
+                const response = await db.any(query);
+                return response;
+            } catch(error) {
+                console.log("ERROR: ", error);
+            }
         }
     }
 
@@ -142,8 +158,7 @@ class LinksModel {
             const query = `
                 SELECT target_url FROM links
                 WHERE uuid = ${uuid} 
-                OR custom_link = ${uuid}
-                returning target_url;
+                OR custom_link = ${uuid};
                 `
             const response = await db.one(query);
             return response;
