@@ -2,6 +2,7 @@
 //import express & create router
 const express = require('express');
 const router = express.Router();
+const UserModel = require("../models/Users");
 const LinkModel = require("../models/Links");
 
 //route for home page and redirect
@@ -12,7 +13,12 @@ router.get('/:redirect?', async (req, res) => {
         console.log(req.params.redirect);
         //get target URL
         const targetURL = await LinkModel.getTargetUrl(req.params.redirect);
+        //Update click count for the uuid
         const response = await LinkModel.updateClicks(req.params.redirect);
+        //Find the user associated with this uuid
+        const thisUser = await LinkModel.findUser(req.params.redirect);
+        //Increment the user's total clicks by one
+        const addTotal = await UserModel.updateTotalClicks(thisUser);
         console.log(targetURL);
         res.redirect("http://" + targetURL.target_url);
         //res.redirect(targetURL.target_url);

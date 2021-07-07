@@ -119,6 +119,21 @@ class LinksModel {
         }
     }
 
+    //Method to find user for a uuid
+    static async findUser(uuid) {
+        try {
+            const response = await db.one(`
+                SELECT userID FROM links
+                WHERE uuid = '${uuid}';`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
     //Method to delete a saved link
     static async deleteLink(id) {
         try {
