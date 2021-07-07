@@ -81,28 +81,39 @@ router.post("/add", async (req,res)=>{
     //create UUID for link
     const uuid = nanoid(7);
 
-    //Run addLink function of link model
-    const response = await LinkModel.addLink(userID, uuid, target_url);
-    //console.log(response);
+    //validate link
+    let url = "http://" + target_url;
+    let isURLValid = isValidURL(url);
 
-    if(response.rowCount === 1)
+    if(isURLValid)
     {
-        console.log("added a row!");
-        console.log("Here is your link: " + "www.linkify.com/" + uuid);
-        const shortened_link = "127.0.0.1:3000/" + uuid;
-        res.render("template", {
-            locals: {
-                title: "Home",
-                is_logged_in: req.session.is_logged_in,
-                user_first_name: req.session.first_name,
-                shortened_link: shortened_link,
-                target_url: target_url
-            },
-            partials: {
-                body: "partials/home-success"
-            }
-        })
+        //Run addLink function of link model
+        const response = await LinkModel.addLink(userID, uuid, url);
+            
+        if(response.rowCount === 1)
+        {
+            console.log("added a row!");
+            console.log("Here is your link: " + "www.linkify.com/" + uuid);
+            const shortened_link = "127.0.0.1:3000/" + uuid;
+            res.render("template", {
+                locals: {
+                    title: "Home",
+                    is_logged_in: req.session.is_logged_in,
+                    user_first_name: req.session.first_name,
+                    shortened_link: shortened_link,
+                    target_url: url
+                },
+                partials: {
+                    body: "partials/home-success"
+                }
+            })
+        }
     }
+    else
+    {
+        console.log("This URL is not valid");
+    }
+
 })
 
 //POST custom_add
@@ -123,11 +134,21 @@ router.post("/custom_add", async (req,res)=>{
     //create UUID for link
     const uuid = nanoid(7);
 
-    //Escape any ' that appear in the title
-    const titleString = title[0] + title.slice(1).replace(/'/g, "''");
-    //Run addLink function of link model
-    const response = await LinkModel.addCustomLink(userID, uuid, custom_link, target_url, titleString);
-    res.redirect('/links/dashboard');
+    //validate link
+    let url = "http://" + target_url;
+    let isURLValid = isValidURL(url);
+    if(isURLValid)
+    {
+        //Escape any ' that appear in the title
+        const titleString = title[0] + title.slice(1).replace(/'/g, "''");
+        //Run addLink function of link model
+        const response = await LinkModel.addCustomLink(userID, uuid, custom_link, url, titleString);
+        res.redirect('/links/dashboard');
+    }
+    else
+    {
+        console.log("This is not a valid URL!");
+    }
 })
 
 //POST update
@@ -150,7 +171,10 @@ router.post("/delete", async (req,res)=>{
     res.redirect('/links/dashboard');
 })
 
-
+function isValidURL(string) {
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  };
 
 //export the router for use in the app
 module.exports = router;

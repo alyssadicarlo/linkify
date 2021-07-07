@@ -14,7 +14,8 @@ router.get('/:redirect?', async (req, res) => {
         const targetURL = await LinkModel.getTargetUrl(req.params.redirect);
         const response = await LinkModel.updateClicks(req.params.redirect);
         console.log(targetURL);
-        res.redirect("http://" + targetURL.target_url);
+        //console.log(targetURL.target_url);
+        res.redirect(targetURL.target_url);
         //res.redirect(targetURL.target_url);
     }
     else
