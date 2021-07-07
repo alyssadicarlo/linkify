@@ -4,6 +4,7 @@ CREATE TABLE users(
     last_name text,
     email varchar(200),
     password varchar(2000),
+    total_clicks integer default 0,
     UNIQUE(email)
 );
 

@@ -20,7 +20,8 @@ router.get('/:redirect?', async (req, res) => {
         //Increment the user's total clicks by one
         const addTotal = await UserModel.updateTotalClicks(thisUser.userid);
         console.log(targetURL);
-        res.redirect("http://" + targetURL.target_url);
+        //console.log(targetURL.target_url);
+        res.redirect(targetURL.target_url);
         //res.redirect(targetURL.target_url);
     }
     else
