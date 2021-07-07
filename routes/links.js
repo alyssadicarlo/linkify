@@ -78,12 +78,12 @@ router.post("/add", async (req,res)=>{
 //POST custom_add
 router.post("/custom_add", async (req,res)=>{
     //get link URL from input form
-    const {target_url} = req.body;
+    const { custom_link, target_url, title } = req.body;
     //get user ID (if no user id from session, uID = 0)
     let userID = null;
-    if(!!req.session.userID)
+    if(req.session.is_logged_in === true)
     {
-        userID = req.session.userID;
+        userID = req.session.user_id;
     }
     else
     {
@@ -94,8 +94,8 @@ router.post("/custom_add", async (req,res)=>{
     const uuid = nanoid(7);
 
     //Run addLink function of link model
-    const response = await LinkModel.addLink(userID, uuid, target_url);
-
+    const response = await LinkModel.addCustomLink(userID, uuid, custom_link, target_url, title);
+    res.redirect('/');
 })
 
 //POST update
