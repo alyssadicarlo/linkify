@@ -14,7 +14,7 @@ CREATE TABLE links(
     custom_link text default NULL,
     target_url varchar(2000),
     title varchar(200) default NULL,
-    date_added date default now(),
+    date_added TIMESTAMP default NOW(),
     click_count integer default 0,
     UNIQUE(custom_link),
     UNIQUE(uuid)

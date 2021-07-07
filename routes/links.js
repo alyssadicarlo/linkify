@@ -10,19 +10,45 @@ const {nanoid} = require("nanoid");
 const router = express.Router();
 
 //GET dashboard
-router.get("/dashboard", async (req,res)=>{
+router.get("/dashboard/:search?", async (req,res)=>{
+
     //render dashboard page
-    //pass links data
-    res.render("template", {
-        locals: {
-            title: "Dashboard",
-            is_logged_in: req.session.is_logged_in,
-            user_first_name: req.session.first_name
-        },
-        partials: {
-            body: "partials/dashboard"
-        }
-    })
+
+    //console.log(linkData);
+    if(!!req.params["search?"])
+    {
+        console.log(req.params["search?"]);
+        //pass links data (date added by default)
+        const linkData = await LinkModel.searchLinks(req.params["search?"], req.session.user_id);
+        res.render("template", {
+            locals: {
+                title: "Dashboard",
+                is_logged_in: req.session.is_logged_in,
+                user_first_name: req.session.first_name,
+                link_data: linkData
+            },
+            partials: {
+                body: "partials/dashboard"
+            }
+        })
+    }
+    else
+    {
+        //pass links data (date added by default)
+        const linkData = await LinkModel.getBy(req.session.user_id, 'date_added');
+        res.render("template", {
+            locals: {
+                title: "Dashboard",
+                is_logged_in: req.session.is_logged_in,
+                user_first_name: req.session.first_name,
+                link_data: linkData
+            },
+            partials: {
+                body: "partials/dashboard"
+            }
+        })
+    }
+
 })
 
 //POST add
