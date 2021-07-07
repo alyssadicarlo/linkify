@@ -27,8 +27,8 @@ Users can generate random-character urls from the homepage or login to create, u
     * View all their existing links
     * Sort by different parameters
     * Add new links with titles and custom urls
-    * Modify exisiting links
-    * Delete exisiting links
+    * Modify existing links
+    * Delete existing links
 
 ## Future Improvements
 * Allow users to create custom avatars
