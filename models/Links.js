@@ -82,9 +82,9 @@ class LinksModel {
         try {
             const query = `
                 UPDATE links
-                SET custom_link = '${custom_link}'
-                SET target_url = '${target_url}'
-                SET title = '${title}'
+                SET custom_link = '${custom_link}',
+                target_url = '${target_url}',
+                title = '${title}'
                 WHERE id = ${id};`
             const response = await db.result(query);
             return response;
