@@ -87,12 +87,11 @@ class LinksModel {
     }
 
     //Method to update existing custom link
-    static async updateLink(id, custom_link, target_url, title) {
+    static async updateLink(id, custom_link, title) {
         try {
             const query = `
                 UPDATE links
                 SET custom_link = '${custom_link}',
-                target_url = '${target_url}',
                 title = '${title}'
                 WHERE id = ${id};`
             const response = await db.result(query);
