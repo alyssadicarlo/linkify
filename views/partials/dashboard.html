@@ -9,9 +9,8 @@ ${!!is_logged_in ?
             <form class="d-flex">
                 <input class="form-control me-2" name="search" type="search" placeholder="Search links" aria-label="Search">
                 <select name="sort" class="form-select" aria-label="Default select example">
-                  <option selected>Sort by</option>
                   <option value="title">Title</option>
-                  <option value="date_added">Date Added</option>
+                  <option value="date_added" selected>Date Added</option>
                   <option value="click_count">Click Count</option>
                 </select>
                 <button class="btn btn-outline-primary" type="submit">Search</button>
@@ -124,5 +123,5 @@ ${link_data.map(link =>
     </div>
 </div>`
 :
-``
+`<h1>Please login to view this page!</h1>`
 }
