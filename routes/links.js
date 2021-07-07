@@ -16,14 +16,18 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     //render dashboard page
     console.log(req.query.search);
     console.log(req.query.sort);
-
+    let sort = req.query.sort;
+    if(!sort)
+    {
+        sort = "date_added";
+    }
     //console.log(linkData);
     if(!!req.query.search)
     {
         //console.log(req.query.search);
         
         //pass links data (date added by default)
-        const linkData = await LinkModel.searchLinks(req.query.search, req.session.user_id, req.query.sort);
+        const linkData = await LinkModel.searchLinks(req.query.search, req.session.user_id, sort);
         console.log(linkData);
         res.render("template", {
             locals: {
@@ -41,8 +45,16 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     {
         //pass links data (date added by default)
         console.log("no search or sort");
+<<<<<<< HEAD
         const user_id = await req.session.user_id
         const linkData = await LinkModel.getAll(user_id);
+=======
+        const user_id = await req.session.user_id;
+        console.log(user_id, sort);
+        const linkData = await LinkModel.getBy(user_id, sort);
+        console.log(linkData);
+        
+>>>>>>> main
         res.render("template", {
             locals: {
                 title: "Dashboard",
@@ -124,7 +136,7 @@ router.post("/delete", async (req,res)=>{
     const { id } = req.body;
     //Run deleteLink function of link model
     const response = await LinkModel.deleteLink(id)
-    res.redirect('/links/dashboard')
+    res.redirect('/links/dashboard');
 })
 
 
