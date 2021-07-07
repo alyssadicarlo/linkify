@@ -3,7 +3,7 @@ ${!!is_logged_in ?
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
         <div class="d-flex">
-            <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#createNewModal">
                 Create New
             </button>
             <form class="d-flex">
@@ -13,8 +13,27 @@ ${!!is_logged_in ?
         </div>
     </div>
 </nav>
+<div class="container mt-5">
+  <div class="row justify-content-between">
+    <div class="col-2">
+      <p><strong>Title</strong></p>
+    </div>
+    <div class="col-2">
+      <p><strong>Target URL</strong></p>
+    </div>
+    <div class="col-2">
+      <p><strong>Linkify Link</strong></p>
+    </div>
+    <div class="col-2">
+      <p><strong>Custom Link</strong></p>
+    </div>
+    <div class="col-2">
+      <p><strong>Date Added</strong></p>
+    </div>
+  </div>
+</div>
 ${link_data.map(link => 
-  `<div class="card">
+  `<div class="card mb-1">
     <div class="card-body">
       <div class="row justify-content-between">
         <div class="col-2">
@@ -24,23 +43,27 @@ ${link_data.map(link =>
           ${link.target_url}
         </div>
         <div class="col-2">
-          ${link.uuid}
+          <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
         </div>
         <div class="col-2">
-          ${link.custom_link}
+          <a href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>
         </div>
         <div class="col-2">
           ${link.date_added}
         </div>
       </div>
+      <form>
+        <input type="hidden" name="id" value="${link.id}">
+        
+      </form>
     </div>
   </div>`  
 ).join('')}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="createNewModal" tabindex="-1" aria-labelledby="createNewModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add New Link</h5>
+          <h5 class="modal-title" id="createNewModalLabel">Add New Link</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
