@@ -58,7 +58,7 @@ router.post("/login", async (req,res)=>{
         req.session.user_id = user_id;
         req.session.first_name = first_name;
         req.session.last_name = last_name;
-        res.redirect("/");
+        res.redirect("/links");
     }
     else
     {
