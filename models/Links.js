@@ -136,6 +136,21 @@ class LinksModel {
             console.log("ERROR: ", error);
         }
     }
+
+    static async getTargetUrl(uuid) {
+        try {
+            const query = `
+                SELECT target_url FROM links
+                WHERE uuid = ${uuid} 
+                OR custom_link = ${uuid}
+                returning target_url;
+                `
+            const response = await db.one(query);
+            return response;
+        } catch(error) {
+            console.log("ERROR: ", error);
+        }
+    }
 }
 
 module.exports = LinksModel;

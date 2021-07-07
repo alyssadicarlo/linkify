@@ -37,8 +37,8 @@ router.get("/:search?", async (req,res)=>{
     {
         //pass links data (date added by default)
         console.log("no search");
-        
-        const linkData = await LinkModel.getBy(req.session.user_id, 'date_added');
+        const user_id = await req.session.user_id
+        const linkData = await LinkModel.getBy(user_id, 'date_added');
         res.render("template", {
             locals: {
                 title: "Dashboard",
@@ -96,8 +96,10 @@ router.post("/custom_add", async (req,res)=>{
     //create UUID for link
     const uuid = nanoid(7);
 
+    //Escape any ' that appear in the title
+    const titleString = title[0] + title.slice(1).replace(/'/g, "''");
     //Run addLink function of link model
-    const response = await LinkModel.addCustomLink(userID, uuid, custom_link, target_url, title);
+    const response = await LinkModel.addCustomLink(userID, uuid, custom_link, target_url, titleString);
     res.redirect('/');
 })
 
@@ -105,8 +107,10 @@ router.post("/custom_add", async (req,res)=>{
 router.post("/update", async (req,res)=>{
     //get id, custom link value, targetURL, and title
     const { id, custom_url, target_url, title} = req.body;
+    //Escape any ' that appear in the title
+    const titleString = title[0] + title.slice(1).replace(/'/g, "''");
     //Run updateLink function of link model
-    const response = await LinkModel.updateLink(id, custom_url, target_url, title);
+    const response = await LinkModel.updateLink(id, custom_url, target_url, titleString);
     res.redirect('/');
 })
 
