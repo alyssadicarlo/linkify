@@ -68,8 +68,8 @@ router.post("/custom_add", async (req,res)=>{
     const uuid = nanoid(7);
 
     //Run addLink function of link model
-    LinkModel.addLink(userID, uuid, target_url);
-    
+    const response = await LinkModel.addLink(userID, uuid, target_url);
+
 })
 
 //POST update

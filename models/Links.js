@@ -53,7 +53,7 @@ class LinksModel {
                     (userID, uuid, custom_link, target_url, title)
                 VALUES
                 (${userID}, '${uuid}', '${custom_link}', '${target_url}', '${title}');`
-            const response = await db.one(query);
+            const response = await db.result(query);
             return response;
         } catch(error) {
             console.error("ERROR: ", error);
@@ -69,7 +69,7 @@ class LinksModel {
                     (userID, uuid, target_url)
                 VALUES
                 ('${userID}','${uuid}', '${target_url}');`
-            const response = await db.one(query);
+            const response = await db.result(query);
             return response;
         } catch(error) {
             console.error("ERROR: ", error);
@@ -117,6 +117,20 @@ class LinksModel {
                 `DELETE FROM links
                 WHERE id = ${id};`
             )
+            return response;
+        } catch(error) {
+            console.log("ERROR: ", error);
+        }
+    }
+
+    static async searchLinks(parameter, user_id) {
+        try {
+            const query = `
+                SELECT * FROM links
+                WHERE userID = ${user_id}
+                AND target_url LIKE '%${parameter}%';
+                `
+            const response = await db.any(query);
             return response;
         } catch(error) {
             console.log("ERROR: ", error);
