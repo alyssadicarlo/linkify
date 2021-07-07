@@ -108,7 +108,7 @@ router.post("/custom_add", async (req,res)=>{
     const titleString = title[0] + title.slice(1).replace(/'/g, "''");
     //Run addLink function of link model
     const response = await LinkModel.addCustomLink(userID, uuid, custom_link, target_url, titleString);
-    res.redirect('/');
+    res.redirect('/links/dashboard');
 })
 
 //POST update
