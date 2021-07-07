@@ -1,7 +1,5 @@
 'use strict';
 
-const { param } = require('../routes');
-const { query } = require('./conn');
 const db = require('./conn');
 
 
