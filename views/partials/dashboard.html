@@ -8,6 +8,10 @@ ${!!is_logged_in ?
             </button>
             <form class="d-flex">
                 <input class="form-control me-2" name="search" type="search" placeholder="Search links" aria-label="Search">
+                <select name="sort">
+                  <option>Title</option>
+                  <option>Date Added</option>
+                </select>
                 <button class="btn btn-outline-primary" type="submit">Search</button>
             </form>
         </div>
@@ -30,6 +34,9 @@ ${!!is_logged_in ?
     <div class="col-2">
       <p><strong>Date Added</strong></p>
     </div>
+    <div class="col-2">
+      <p><strong>Click Count</strong></p>
+    </div>
   </div>
 </div>
 ${link_data.map(link => 
@@ -51,14 +58,19 @@ ${link_data.map(link =>
         <div class="col-2">
           ${link.date_added}
         </div>
+        <div class="col-2">
+          <p>${link.click_count}</p>
+        </div>
       </div>
-      <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
-        Update
-      </button>
-      <form action="/links/delete" method="POST">
-        <input type="hidden" name="id" value="${link.id}">
-        <button type="submit" class="btn btn-outline-primary">Delete</button>
-      </form>
+      <div class="d-flex align-items-center">
+        <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
+          Update
+        </button>
+        <form action="/links/delete" method="POST">
+          <input type="hidden" name="id" value="${link.id}">
+          <button type="submit" class="btn btn-outline-primary">Delete</button>
+        </form>
+      </div>
     </div>
   </div>
   <div class="modal fade" id="updateModal${link.id}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
