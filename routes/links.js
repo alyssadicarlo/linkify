@@ -45,16 +45,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     {
         //pass links data (date added by default)
         console.log("no search or sort");
-<<<<<<< HEAD
         const user_id = await req.session.user_id
         const linkData = await LinkModel.getAll(user_id);
-=======
-        const user_id = await req.session.user_id;
-        console.log(user_id, sort);
-        const linkData = await LinkModel.getBy(user_id, sort);
-        console.log(linkData);
-        
->>>>>>> main
         res.render("template", {
             locals: {
                 title: "Dashboard",
