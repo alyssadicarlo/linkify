@@ -46,7 +46,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
         //pass links data (date added by default)
         console.log("no search or sort");
         const user_id = await req.session.user_id
-        const linkData = await LinkModel.getAll(user_id);
+        const linkData = await LinkModel.getBy(user_id, sort);
         res.render("template", {
             locals: {
                 title: "Dashboard",
@@ -83,7 +83,26 @@ router.post("/add", async (req,res)=>{
 
     //Run addLink function of link model
     const response = await LinkModel.addLink(userID, uuid, target_url);
-    
+    //console.log(response);
+
+    if(response.rowCount === 1)
+    {
+        console.log("added a row!");
+        console.log("Here is your link: " + "www.linkify.com/" + uuid);
+        const shortened_link = "127.0.0.1:3000/" + uuid;
+        res.render("template", {
+            locals: {
+                title: "Home",
+                is_logged_in: req.session.is_logged_in,
+                user_first_name: req.session.first_name,
+                shortened_link: shortened_link,
+                target_url: target_url
+            },
+            partials: {
+                body: "partials/home-success"
+            }
+        })
+    }
 })
 
 //POST custom_add
