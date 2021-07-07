@@ -133,11 +133,11 @@ router.post("/custom_add", async (req,res)=>{
 //POST update
 router.post("/update", async (req,res)=>{
     //get id, custom link value, targetURL, and title
-    const { id, custom_url, target_url, title} = req.body;
+    const { id, custom_url, title} = req.body;
     //Escape any ' that appear in the title
     const titleString = title[0] + title.slice(1).replace(/'/g, "''");
     //Run updateLink function of link model
-    const response = await LinkModel.updateLink(id, custom_url, target_url, titleString);
+    const response = await LinkModel.updateLink(id, custom_url, titleString);
     res.redirect('/links/dashboard');
 })
 
