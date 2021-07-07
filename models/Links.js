@@ -123,17 +123,33 @@ class LinksModel {
         }
     }
 
-    static async searchLinks(parameter, user_id, sort) {
-        try {
-            const query = `
-                SELECT * FROM links
-                WHERE userID = ${user_id}
-                AND target_url LIKE '%${parameter}%';
-                `
-            const response = await db.any(query);
-            return response;
-        } catch(error) {
-            console.log("ERROR: ", error);
+    static async searchLinks(search, user_id, sort) {
+        if (!!sort) {
+            try {
+                const query = `
+                    SELECT * FROM links
+                    WHERE userID = ${user_id}
+                    AND target_url LIKE '%${search}%'
+                    ORDER by '${sort}';
+                    `
+                const response = await db.any(query);
+                return response;
+            } catch(error) {
+                console.log("ERROR: ", error);
+            }
+        } else {
+            try {
+                const query = `
+                    SELECT * FROM links
+                    WHERE userID = ${user_id}
+                    AND target_url LIKE '%${parameter}%'
+                    ORDER by date_added;
+                    `
+                const response = await db.any(query);
+                return response;
+            } catch(error) {
+                console.log("ERROR: ", error);
+            }
         }
     }
 
@@ -141,8 +157,9 @@ class LinksModel {
         try {
             const query = `
                 SELECT target_url FROM links
-                WHERE uuid = '${uuid}'
-                OR custom_link = '${uuid}';
+                WHERE uuid = ${uuid} 
+                OR custom_link = ${uuid};
+
                 `
 
             const response = await db.one(query);
