@@ -69,10 +69,9 @@ ${link_data.map(link =>
         <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
           Update
         </button>
-        <form action="/links/delete" method="POST">
-          <input type="hidden" name="id" value="${link.id}">
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
+        <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#deleteLink${link.id}">
+          Delete
+        </button>
       </div>
     </div>
   </div>
@@ -94,6 +93,23 @@ ${link_data.map(link =>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary ms-1">Update</button>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteLink${link.id}" tabindex="-1" aria-labelledby="deleteLinkLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteLinkLabel">Are you sure?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/links/delete" method="POST">
+              <input type="hidden" name="id" value="${link.id}">
+              <button type="button" class="btn btn-secondary" data-bs-="modal">Exit</button>
+              <button type="submit" class="btn btn-primary ms-1">Yes</button>
+            </form>
         </div>
       </div>
     </div>
