@@ -2,12 +2,13 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const target_url = document.querySelector('input');
-    target_url.select();
 
     const copyButton = document.querySelector('#copyButton');
 
     copyButton.addEventListener('click', () => {
+        target_url.select();
         document.execCommand("copy");
-        alert('copied!');
+        copyButton.classList = "btn btn-outline-success";
+        copyButton.innerHTML = "Copied";
     });
 });
