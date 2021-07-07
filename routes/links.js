@@ -42,7 +42,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
         //pass links data (date added by default)
         console.log("no search or sort");
         const user_id = await req.session.user_id
-        const linkData = await LinkModel.getBy(user_id, req.query.sort);
+        const linkData = await LinkModel.getAll(user_id);
         res.render("template", {
             locals: {
                 title: "Dashboard",
@@ -115,7 +115,7 @@ router.post("/update", async (req,res)=>{
     const titleString = title[0] + title.slice(1).replace(/'/g, "''");
     //Run updateLink function of link model
     const response = await LinkModel.updateLink(id, custom_url, target_url, titleString);
-    res.redirect('/');
+    res.redirect('/links/dashboard');
 })
 
 //POST delete
@@ -124,7 +124,7 @@ router.post("/delete", async (req,res)=>{
     const { id } = req.body;
     //Run deleteLink function of link model
     const response = await LinkModel.deleteLink(id)
-    res.redirect('/')
+    res.redirect('/links/dashboard')
 })
 
 
