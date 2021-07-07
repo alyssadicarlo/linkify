@@ -159,7 +159,9 @@ class LinksModel {
                 SELECT target_url FROM links
                 WHERE uuid = ${uuid} 
                 OR custom_link = ${uuid};
+
                 `
+
             const response = await db.one(query);
             return response;
         } catch(error) {
