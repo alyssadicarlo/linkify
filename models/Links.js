@@ -122,6 +122,20 @@ class LinksModel {
             console.log("ERROR: ", error);
         }
     }
+
+    static async searchLinks(parameter, user_id) {
+        try {
+            const query = `
+                SELECT * FROM links
+                WHERE userID = ${user_id}
+                AND target_url LIKE '%${parameter}%';
+                `
+            const response = await db.any(query);
+            return response;
+        } catch(error) {
+            console.log("ERROR: ", error);
+        }
+    }
 }
 
 module.exports = LinksModel;
