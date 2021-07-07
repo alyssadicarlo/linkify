@@ -10,7 +10,7 @@ const {nanoid} = require("nanoid");
 const router = express.Router();
 
 //GET dashboard
-router.get("/:search?", async (req,res)=>{
+router.get("/dashboard/:search?", async (req,res)=>{
 
     //render dashboard page
     console.log(req.query.search);
