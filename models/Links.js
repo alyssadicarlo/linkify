@@ -109,7 +109,8 @@ class LinksModel {
             const response = await db.result(`
                 UPDATE links
                 SET click_count = click_count + 1
-                WHERE uuid = '${uuid}';`
+                WHERE uuid = '${uuid}'
+                OR custom_link = '${uuid}';`
             )
         return response;
 
