@@ -1,5 +1,7 @@
 'use strict';
 
+const { param } = require('../routes');
+const { query } = require('./conn');
 const db = require('./conn');
 
 
@@ -33,11 +35,20 @@ class LinksModel {
     //Method to retrieve all links for user and sort by user parameter
     static async getBy(userID, parameter) {
         try {
-            const response = await db.any(
-                `SELECT * FROM links
+            let query = "";
+            if(parameter === "title")
+            {
+                query = `SELECT * FROM links
                 WHERE userID = ${userID}
                 ORDER by ${parameter};`
-            )
+            }
+            else
+            {
+                query = `SELECT * FROM links
+                WHERE userID = ${userID}
+                ORDER by ${parameter} DESC;`
+            }
+            const response = await db.any(query);
             return response;
         } catch(error) {
             console.error("ERROR: ", error);
@@ -126,12 +137,24 @@ class LinksModel {
     static async searchLinks(search, user_id, sort) {
         if (!!sort) {
             try {
-                const query = `
+                let query = "";
+                if(sort === "title"){
+                    query = `
                     SELECT * FROM links
                     WHERE userID = ${user_id}
                     AND target_url LIKE '%${search}%'
-                    ORDER by '${sort}';
-                    `
+                    ORDER by ${sort};
+                    `;
+                }
+                else{
+                    query = `
+                    SELECT * FROM links
+                    WHERE userID = ${user_id}
+                    AND target_url LIKE '%${search}%'
+                    ORDER by ${sort} DESC;
+                    `;
+                }
+
                 const response = await db.any(query);
                 return response;
             } catch(error) {
@@ -157,8 +180,8 @@ class LinksModel {
         try {
             const query = `
                 SELECT target_url FROM links
-                WHERE uuid = ${uuid} 
-                OR custom_link = ${uuid};
+                WHERE uuid = '${uuid}' 
+                OR custom_link = '${uuid}';
 
                 `
 
