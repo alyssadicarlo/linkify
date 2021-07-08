@@ -17,7 +17,8 @@ router.get("/login", (req, res)=>{
             user_first_name: req.session.first_name
         },
         partials: {
-            body: "partials/login"
+            body: "partials/login",
+            failure: 'partials/blank'
         }
     })
 })
@@ -121,7 +122,17 @@ router.post("/login", async (req,res)=>{
     }
     else
     {
-        res.sendStatus(403);
+        res.render('template', {
+            locals: {
+                title: "Log In",
+                is_logged_in: req.session.is_logged_in,
+                user_first_name: req.session.first_name
+            },
+            partials: {
+                body: 'partials/login',
+                failure: 'partials/login-failure'
+            }
+        });
     }
     
 })

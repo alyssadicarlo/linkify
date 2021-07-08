@@ -102,23 +102,6 @@ class LinksModel {
         }
     }
 
-    //Method to increment click count
-    static async updateClicks(uuid) {
-        try {
-            const response = await db.result(`
-                UPDATE links
-                SET click_count = click_count + 1
-                WHERE uuid = '${uuid}'
-                OR custom_link = '${uuid}';`
-            )
-        return response;
-
-        } catch(error) {
-            console.error("ERROR: ", error);
-            return error;
-        }
-    }
-
     //Method to find user for a uuid
     static async findUser(uuid) {
         try {
@@ -205,12 +188,24 @@ class LinksModel {
         }
     }
 
+
     static async deleteUserLinks(user_id) {
         try {
             const response = await db.result(
                 `DELETE FROM links
                 WHERE userID = ${user_id};`
             )
+
+    //return linkID of the provided UUID
+    static async getLinkID(uuid) {
+        try {
+            const query = `
+                SELECT id FROM links
+                WHERE uuid = '${uuid}' 
+                OR custom_link = '${uuid}';
+                `
+
+            const response = await db.one(query);
             return response;
         } catch(error) {
             console.log("ERROR: ", error);
