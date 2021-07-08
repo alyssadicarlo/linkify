@@ -56,7 +56,7 @@ ${link_data.map(link =>
         </div>
         <div class="col-2">
           <a class="customLink" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>
-          <button class="btn btn-outline-primary copyButton" id="${link.id}">Copy</button>
+          <button class="btn btn-outline-primary btn-sm mt-2 copyButton" id="${link.id}">Copy</button>
         </div>
         <div class="col-2">
           ${link.date_added}
@@ -66,10 +66,10 @@ ${link_data.map(link =>
         </div>
       </div>
       <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
-          Update
+        <button type="button" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
+          Edit
         </button>
-        <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#deleteLink${link.id}">
+        <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#deleteLink${link.id}">
           Delete
         </button>
       </div>
@@ -107,7 +107,7 @@ ${link_data.map(link =>
         <div class="modal-body">
             <form action="/links/delete" method="POST">
               <input type="hidden" name="id" value="${link.id}">
-              <button type="button" class="btn btn-secondary" data-bs-="modal">Exit</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Exit</button>
               <button type="submit" class="btn btn-primary ms-1">Yes</button>
             </form>
         </div>

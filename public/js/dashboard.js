@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < copyButtons.length; i++) {
         copyButtons[i].addEventListener('click', () => {
             copyToClipboard(customLinks[i].innerHTML);
-            copyButtons[i].classList = "btn btn-success";
+            copyButtons[i].classList = "btn btn-success btn-sm mt-2";
             copyButtons[i].innerHTML = "Copied";
             copyButtons.forEach(button => {
                 if (button.id !== copyButtons[i].id) {
-                    button.classList = "btn btn-outline-primary";
+                    button.classList = "btn btn-outline-primary btn-sm mt-2";
                     button.innerHTML = "Copy";
                 }
             });
