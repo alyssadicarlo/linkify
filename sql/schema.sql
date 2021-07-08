@@ -4,7 +4,6 @@ CREATE TABLE users(
     last_name text,
     email varchar(200),
     password varchar(2000),
-    total_clicks integer default 0,
     UNIQUE(email)
 );
 
@@ -16,8 +15,12 @@ CREATE TABLE links(
     target_url varchar(2000),
     title varchar(200) default NULL,
     date_added TIMESTAMP default NOW(),
-    click_count integer default 0,
     UNIQUE(custom_link),
     UNIQUE(uuid)
 );
 
+CREATE TABLE clicks(
+    id serial PRIMARY KEY,
+    linkID integer REFERENCES links(id),
+    date_added TIMESTAMP default NOW()
+);
