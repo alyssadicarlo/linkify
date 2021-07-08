@@ -42,8 +42,20 @@ class ClicksModel {
         }
     }
 
-    static async getTotalLinksClicks(link_id){
-
+    static async getTotalLinkClicks(link_id){
+        //SQL SELECT statement to get all of the Clicks associated a provided link_id
+        try {
+            //prepared statement to sanitize the data
+            const query = `SELECT clicks.id, clicks.linkid, links.uuid, links.custom_link, links.target_url, clicks.date_added 
+            FROM clicks
+            INNER JOIN links ON clicks.linkID=links.id
+            WHERE links.id=${link_id}`;
+            const response = await db.any(query);
+            return response;
+        } catch (error) {
+            console.error('ERROR: ', error);
+            return error;
+        }
     }
 
     

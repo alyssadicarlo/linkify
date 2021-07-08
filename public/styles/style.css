@@ -34,3 +34,21 @@ canvas {
         margin-top: 4px;
     }
 }
+
+.avatarButton {
+    background-size: 100%;
+    border: 6px hidden;
+    height: 13.66vw; 
+    width: 13.66vw; 
+    
+}
+
+.avatarButton:hover {
+    opacity: 0.9;
+}
+
+.avatarButton:active,
+.avatarButton:focus {
+    border: 6px solid black;
+
+}
