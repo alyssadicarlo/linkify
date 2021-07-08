@@ -2,12 +2,21 @@
 
 //imports
 const express = require("express");
+const moment = require('moment');
 const LinkModel = require("../models/Links");
 const {nanoid} = require("nanoid");
 const ClicksModel = require("../models/Clicks");
 
 //create a router 
 const router = express.Router();
+
+function last7Days() {
+    let daysAgo = []
+    for(var i=7; i>0; i--) {
+        daysAgo.push(moment().subtract(i, 'days').format("MM DD"));
+    }
+    return daysAgo
+}
 
 
 //GET dashboard
@@ -108,7 +117,10 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 user_first_name: req.session.first_name,
                 link_data: linkData,
                 total_click_count: totalUserClicks,
-                clicks_per_day: clicksPerDay
+                clicks_per_day: clicksPerDay,
+                click_count: totalUserClicks,
+                click_data: clicksPerDay,
+                last7Days: last7Days(),
             },
             partials: {
                 body: "partials/dashboard",
@@ -170,7 +182,9 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 user_first_name: req.session.first_name,
                 link_data: linkData,
                 total_click_count: totalUserClicks,
-                clicks_per_day: clicksPerDay
+                click_count: totalUserClicks,
+                click_data: clicksPerDay,
+                last7Days: last7Days()
             },
             partials: {
                 body: "partials/dashboard",
@@ -275,7 +289,9 @@ router.post("/custom_add", async (req,res)=>{
                     is_logged_in: req.session.is_logged_in,
                     user_first_name: req.session.first_name,
                     link_data: linkData,
-                    click_count: totalUserClicks
+                    click_count: totalUserClicks,
+                    click_data: [0, 10, 5, 2, 20, 30, 45],
+                    last7Days: last7Days()
                 },
                 partials: {
                     body: "partials/dashboard",
@@ -297,7 +313,9 @@ router.post("/custom_add", async (req,res)=>{
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
-                click_count: totalUserClicks
+                click_count: totalUserClicks,
+                click_data: [0, 10, 5, 2, 20, 30, 45],
+                last7Days: last7Days()
             },
             partials: {
                 body: "partials/dashboard",

@@ -19,19 +19,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (window.innerWidth <= 991) {
-        filterForm.classList = "";
-    } else {
-        filterForm.classList = "d-flex";
-    }
-
-    window.addEventListener('resize', (event) => {
-        if (event.target.innerWidth <= 991) {
+    if (!!filterForm) {
+        if (window.innerWidth <= 991) {
             filterForm.classList = "";
         } else {
             filterForm.classList = "d-flex";
         }
-    });
+
+        window.addEventListener('resize', (event) => {
+            if (event.target.innerWidth <= 991) {
+                filterForm.classList = "";
+            } else {
+                filterForm.classList = "d-flex";
+            }
+        });
+    }
 });
 
 function copyToClipboard(text) {
