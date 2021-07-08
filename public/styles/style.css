@@ -4,6 +4,10 @@
     align-items: center;
 }
 
+canvas {
+    max-height: 400px;
+}
+
 @media screen and (max-width: 768px) {
     .reverse {
         flex-direction: column-reverse;

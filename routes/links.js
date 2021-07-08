@@ -32,6 +32,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     {
         //Return the links matching the search parameter & sort type
         const linkData = await LinkModel.searchLinks(req.query.search, req.session.user_id, sort);
+        console.log("LINK DATA: ", linkData);
         
         //render the template with the provided link data
         res.render("template", {
@@ -39,8 +40,9 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 title: "Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
-                link_data: linkData,
-                click_count: totalUserClicks
+                link_data: JSON.stringify(linkData),
+                click_count: totalUserClicks,
+                click_data: [0, 10, 5, 2, 20, 30, 45]
             },
             partials: {
                 body: "partials/dashboard",
@@ -61,7 +63,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
-                click_count: totalUserClicks
+                click_count: totalUserClicks,
+                click_data: [0, 10, 5, 2, 20, 30, 45]
             },
             partials: {
                 body: "partials/dashboard",
@@ -166,7 +169,8 @@ router.post("/custom_add", async (req,res)=>{
                     is_logged_in: req.session.is_logged_in,
                     user_first_name: req.session.first_name,
                     link_data: linkData,
-                    click_count: totalUserClicks
+                    click_count: totalUserClicks,
+                    click_data: [0, 10, 5, 2, 20, 30, 45]
                 },
                 partials: {
                     body: "partials/dashboard",
@@ -188,7 +192,8 @@ router.post("/custom_add", async (req,res)=>{
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
-                click_count: totalUserClicks
+                click_count: totalUserClicks,
+                click_data: [0, 10, 5, 2, 20, 30, 45]
             },
             partials: {
                 body: "partials/dashboard",
