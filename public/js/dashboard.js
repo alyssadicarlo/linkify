@@ -6,14 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < copyButtons.length; i++) {
         copyButtons[i].addEventListener('click', () => {
-            console.log(customLinks[i].innerHTML);
             copyToClipboard(customLinks[i].innerHTML);
             copyButtons[i].classList = "btn btn-success";
             copyButtons[i].innerHTML = "Copied";
             copyButtons.forEach(button => {
                 if (button.id !== copyButtons[i].id) {
                     button.classList = "btn btn-outline-primary";
-                button.innerHTML = "Copy";
+                    button.innerHTML = "Copy";
                 }
             });
         });
@@ -21,5 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function copyToClipboard(text) {
-    console.log("COPIED", text);
-}
+    navigator.clipboard.writeText(text).then(function() {
+        console.log("SUCCESS");
+    }, function() {
+        console.log("FAIL");
+    });
+  }
