@@ -9,22 +9,26 @@ ${!!is_logged_in ?
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#createNewModal">
-              Create New
+              Create Link
             </button>
           </li>
         </ul>
         <div class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <form id="filterForm" class="d-flex">
-              <input style="width: 200px;" class="form-control" name="search" type="search" placeholder="Search target url" aria-label="Search">
-              <select name="sort" class="form-select" aria-label="Default select example">
-                <option selected disabled>Sort by</option>
-                <option value="title">Title</option>
-                <option value="date_added" selected>Date Added</option>
-                <option value="click_count">Click Count</option>
-              </select>
-              <button class="btn btn-outline-primary" type="submit">Search</button>
-          </form>
+            ${link_data.length > 0 ?
+              `<form id="filterForm" class="d-flex">
+                <input style="width: 200px;" class="form-control" name="search" type="search" placeholder="Search target URL" aria-label="Search">
+                <select name="sort" class="form-select" aria-label="Default select example">
+                  <option selected disabled>Sort by</option>
+                  <option value="title">Title</option>
+                  <option value="date_added" selected>Date Added</option>
+                  <option value="click_count">Click Count</option>
+                </select>
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+              </form>`
+              :
+              ``
+            }
           </ul>
         </div>
       </div>
@@ -52,7 +56,8 @@ ${failure}
     </div>
   </div>
 </div>
-<div class="container mt-5">
+${link_data.length > 0 ?
+`<div class="container mt-5">
   <div class="row justify-content-between">
     <div class="col-2">
       <p><strong>Title</strong></p>
@@ -73,7 +78,12 @@ ${failure}
       <p><strong>Click Count</strong></p>
     </div>
   </div>
-</div>
+</div>`
+:
+`<div class="d-flex justify-content-center">
+  <p>You do not have any links yet. Click <em>Create Link</em> to add a new link.</p>
+</div>`
+}
 ${link_data.map(link => 
   `<div class="card mb-1">
     <div class="card-body">
