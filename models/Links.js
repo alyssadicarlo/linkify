@@ -194,10 +194,12 @@ class LinksModel {
                 `DELETE FROM links
                 WHERE userID = ${user_id};`
             )
-        } catch(error) {
+        } 
+        catch(error) {
             console.log("ERROR: ", error);
         }
-    }    
+    }
+
 
     //return linkID of the provided UUID
     static async getLinkID(uuid) {

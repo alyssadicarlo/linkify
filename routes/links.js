@@ -25,14 +25,39 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
     const totalUserClicks = userClicksResponse.length;
 
-    //Get total clicks for each link from the Clicks model
 
     //if there is a search parameter
     if(!!req.query.search)
     {
         //Return the links matching the search parameter & sort type
-        const linkData = await LinkModel.searchLinks(req.query.search, req.session.user_id, sort);
+        const linkQueryData = await LinkModel.searchLinks(req.query.search, req.session.user_id, sort);
+
+        //Get total clicks for each link from the Clicks model
+
+        //create LinkModel list linkData
+        let linkData = [];
+        //iterate through the returned link data 
+        for(const link of linkQueryData) 
+        {
+            
+            //Use the linkID to query for click_count
+            const linkClicks = await ClicksModel.getTotalLinkClicks(link.id);
+            let click_count = 0;
+            if(linkClicks.length !== null)
+            {
+                click_count = linkClicks.length;
+            }
+            //console.log(click_count);
+            
+            //create a LinkModel Instance using the link query data/calculated click count
+            const newLinkModel = new LinkModel(link.id,link.userID,link.uuid,link.custom_link,link.target_url,link.title,link.date_added, click_count);
+
+            //add it to the linkData list
+            linkData.push(newLinkModel);
+        }
         
+        //console.log(linkData);
+
         //render the template with the provided link data
         res.render("template", {
             locals: {
@@ -40,7 +65,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
-                click_count: totalUserClicks
+                total_click_count: totalUserClicks
             },
             partials: {
                 body: "partials/dashboard",
@@ -52,7 +77,33 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     {
         //Get the link data by current userID, sorted by sort type
         const user_id = await req.session.user_id
-        const linkData = await LinkModel.getBy(user_id, sort);
+        const linkQueryData = await LinkModel.getBy(user_id, sort);
+
+        //Get total clicks for each link from the Clicks model
+
+        //create LinkModel list linkData
+        let linkData = [];
+        //iterate through the returned link data 
+        for(const link of linkQueryData) 
+        {
+            
+            //Use the linkID to query for click_count
+            const linkClicks = await ClicksModel.getTotalLinkClicks(link.id);
+            let click_count = 0;
+            if(linkClicks.length !== null)
+            {
+                click_count = linkClicks.length;
+            }
+            //console.log(click_count);
+            
+            //create a LinkModel Instance using the link query data/calculated click count
+            const newLinkModel = new LinkModel(link.id,link.userID,link.uuid,link.custom_link,link.target_url,link.title,link.date_added, click_count);
+
+            //add it to the linkData list
+            linkData.push(newLinkModel);
+        }
+
+        //console.log(linkData);
         
         //render the template with the provided data
         res.render("template", {
@@ -61,7 +112,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
-                click_count: totalUserClicks
+                total_click_count: totalUserClicks
             },
             partials: {
                 body: "partials/dashboard",
