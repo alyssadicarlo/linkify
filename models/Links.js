@@ -188,6 +188,14 @@ class LinksModel {
         }
     }
 
+
+    static async deleteUserLinks(user_id) {
+        try {
+            const response = await db.result(
+                `DELETE FROM links
+                WHERE userID = ${user_id};`
+            )
+
     //return linkID of the provided UUID
     static async getLinkID(uuid) {
         try {
