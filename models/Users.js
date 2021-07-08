@@ -4,12 +4,13 @@ const db = require('./conn');
 const bcrypt = require('bcryptjs');
 
 class UsersModel {
-    constructor(id, first_name, last_name, email, password) {
+    constructor(id, first_name, last_name, email, password, total_clicks) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
+        this.total_clicks = total_clicks;
     }
 
     checkPassword(hashedPassword) {
@@ -46,6 +47,52 @@ class UsersModel {
             }
         } catch (error) {
             console.error('ERROR: ', error);
+            return error;
+        }
+    }
+
+    static async editName(user_id, first_name, last_name) {
+        try {
+            const response = await db.result(`
+                UPDATE users
+                SET first_name = '${first_name}',
+                    last_name = '${last_name}'
+                WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
+    static async editEmail(user_id, email) {
+        try {
+            const response = await db.result(`
+                UPDATE users
+                SET email = '${email}'
+                WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
+    static async editPassword(user_id, hash) {
+        try {
+            const response = await db.result(`
+                UPDATE users
+                SET password = '${hash}'
+                WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
             return error;
         }
     }
