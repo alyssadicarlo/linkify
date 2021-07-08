@@ -134,7 +134,6 @@ router.post("/login", async (req,res)=>{
             }
         });
     }
-    
 })
 
 //POST signup
@@ -150,7 +149,7 @@ router.post("/signup", async (req,res)=>{
         const firstString = first_name[0] + first_name.slice(1).replace(/'/g, "''");
         const lastString = last_name[0] + last_name.slice(1).replace(/'/g, "''");
 
-        const response = await UserModel.addUser(firstString, lastString, email, hash);
+        const response = await UserModel.addUser(firstString.trim(), lastString.trim(), email, hash);
         console.log("POST ROUTE RESPONSE: ", response);
         if(!!response.id)
         {
