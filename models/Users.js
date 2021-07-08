@@ -49,6 +49,52 @@ class UsersModel {
             return error;
         }
     }
+
+    static async editName(user_id, first_name, last_name) {
+        try {
+            const response = await db.result(`
+                UPDATE users
+                SET first_name = '${first_name}',
+                    last_name = '${last_name}'
+                WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
+    static async editEmail(user_id, email) {
+        try {
+            const response = await db.result(`
+                UPDATE users
+                SET email = '${email}'
+                WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
+    static async editPassword(user_id, hash) {
+        try {
+            const response = await db.result(`
+                UPDATE users
+                SET password = '${hash}'
+                WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
 }
 
 module.exports = UsersModel;

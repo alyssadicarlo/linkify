@@ -1,24 +1,56 @@
 ${!!is_logged_in ?
-`<nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
-    <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
-        <div class="d-flex">
+`<nav class="navbar navbar-expand-lg navbar-light" style="background-color:white;">
+  <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filter" aria-controls="filter" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="filter">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
             <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#createNewModal">
-                Create New
+              Create New
             </button>
-            <form class="d-flex">
-                <input class="form-control me-2" name="search" type="search" placeholder="Search target url" aria-label="Search">
-                <select name="sort" class="form-select" aria-label="Default select example">
-                  <option selected disabled>Sort by</option>
-                  <option value="title">Title</option>
-                  <option value="date_added" selected>Date Added</option>
-                  <option value="click_count">Click Count</option>
-                </select>
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-            </form>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <form id="filterForm" class="d-flex">
+              <input style="width: 200px;" class="form-control" name="search" type="search" placeholder="Search target url" aria-label="Search">
+              <select name="sort" class="form-select" aria-label="Default select example">
+                <option selected disabled>Sort by</option>
+                <option value="title">Title</option>
+                <option value="date_added" selected>Date Added</option>
+                <option value="click_count">Click Count</option>
+              </select>
+              <button class="btn btn-outline-primary" type="submit">Search</button>
+          </form>
+          </ul>
         </div>
-    </div>
+      </div>
+  </div>
 </nav>
+<div class="container">
+  <div class="d-flex align-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+      <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+    </svg>
+    <div class="p-2">
+      <h2 class="m-0">5</h2>
+      <p class="m-0" style="color: gray; font-size: 12px;">Total Clicks</p>
+    </div>
+  </div>
+  <div class="d-flex align-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+      <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+      <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+    </svg>
+    <div class="p-2">
+      <h2 class="m-0">20</h2>
+      <p class="m-0" style="color: gray; font-size: 12px;">Characters Shortened</p>
+    </div>
+  </div>
+</div>
 <div class="container mt-5">
   <div class="row justify-content-between">
     <div class="col-2">
@@ -46,7 +78,11 @@ ${link_data.map(link =>
     <div class="card-body">
       <div class="row justify-content-between">
         <div class="col-2">
-          ${link.title}
+          ${link.title === null ?
+          `${link.target_url}`
+          :
+          `${link.title}`
+          }
         </div>
         <div class="col-2">
           ${link.target_url}
@@ -55,8 +91,12 @@ ${link_data.map(link =>
           <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
         </div>
         <div class="col-2">
-          <a class="customLink" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>
-          <button class="btn btn-outline-primary copyButton" id="${link.id}">Copy</button>
+          ${link.custom_link === null ?
+          `<a class="customLink" href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>`
+          :
+          `<a class="customLink" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>`
+          }
+          <button class="btn btn-outline-primary btn-sm mt-2 copyButton" id="${link.id}">Copy</button>
         </div>
         <div class="col-2">
           ${link.date_added}
@@ -66,10 +106,10 @@ ${link_data.map(link =>
         </div>
       </div>
       <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
-          Update
+        <button type="button" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
+          Edit
         </button>
-        <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#deleteLink${link.id}">
+        <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#deleteLink${link.id}">
           Delete
         </button>
       </div>
@@ -86,12 +126,12 @@ ${link_data.map(link =>
           <form action="/links/update" method="POST">
             <input type="hidden" name="id" value="${link.id}">
             <label for="title">Title</label>
-            <input name="title" id="title" type="text" class="form-control mb-1" value="${link.title}">
+            <input name="title" id="title" type="text" class="form-control mb-1" value="${link.title === null ? `${link.target_url}` : `${link.title}`}">
             <label class="d-flex align-items-center mb-3"> https://linkify.com/
-              <input name="custom_url" type="text" class="form-control ms-1" value="${link.custom_link}">
+              <input name="custom_url" type="text" class="form-control ms-1" value="${link.custom_link === null ? `${link.uuid}` : `${link.custom_link}`}">
             </label>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary ms-1">Update</button>
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-outline-primary ms-1">Update</button>
           </form>
         </div>
       </div>
@@ -107,8 +147,8 @@ ${link_data.map(link =>
         <div class="modal-body">
             <form action="/links/delete" method="POST">
               <input type="hidden" name="id" value="${link.id}">
-              <button type="button" class="btn btn-secondary" data-bs-="modal">Exit</button>
-              <button type="submit" class="btn btn-primary ms-1">Yes</button>
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Exit</button>
+              <button type="submit" class="btn btn-outline-primary ms-1">Yes</button>
             </form>
         </div>
       </div>
@@ -131,14 +171,14 @@ ${link_data.map(link =>
               <label class="d-flex align-items-center mb-3"> https://linkify.com/
                 <input name="custom_link" type="text" class="form-control ms-1" placeholder="your_custom_link">
               </label>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary ms-1">Generate</button>
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-outline-primary ms-1">Generate</button>
             </form>
         </div>
       </div>
     </div>
 </div>`
 :
-`<h1>Please login to view this page!</h1>`
+`<h1>Please <a href="/users/login">login</a> to view this page!</h1>`
 }
 <script src="/js/dashboard.js"></script>
