@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const copyButtons = document.querySelectorAll('.copyButton');
     const customLinks = document.querySelectorAll('.customLink');
+    const filterForm = document.querySelector('#filterForm');
 
     for (let i = 0; i < copyButtons.length; i++) {
         copyButtons[i].addEventListener('click', () => {
@@ -17,6 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    if (window.innerWidth <= 991) {
+        filterForm.classList = "";
+    } else {
+        filterForm.classList = "d-flex";
+    }
+
+    window.addEventListener('resize', (event) => {
+        console.log(event.target.innerWidth);
+        if (event.target.innerWidth <= 991) {
+            filterForm.classList = "";
+        } else {
+            filterForm.classList = "d-flex";
+        }
+    });
 });
 
 function copyToClipboard(text) {
@@ -25,4 +41,4 @@ function copyToClipboard(text) {
     }, function() {
         console.log("FAIL");
     });
-  }
+}

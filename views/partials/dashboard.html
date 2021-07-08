@@ -1,24 +1,44 @@
 ${!!is_logged_in ?
-`<nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
-    <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
-        <div class="d-flex">
+`<nav class="navbar navbar-expand-lg navbar-light" style="background-color:white;">
+  <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filter" aria-controls="filter" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="filter">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
             <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#createNewModal">
-                Create New
+              Create New
             </button>
-            <form class="d-flex">
-                <input class="form-control me-2" name="search" type="search" placeholder="Search target url" aria-label="Search">
-                <select name="sort" class="form-select" aria-label="Default select example">
-                  <option selected disabled>Sort by</option>
-                  <option value="title">Title</option>
-                  <option value="date_added" selected>Date Added</option>
-                  <option value="click_count">Click Count</option>
-                </select>
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-            </form>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <form id="filterForm" class="d-flex">
+              <input style="width: 200px;" class="form-control" name="search" type="search" placeholder="Search target url" aria-label="Search">
+              <select name="sort" class="form-select" aria-label="Default select example">
+                <option selected disabled>Sort by</option>
+                <option value="title">Title</option>
+                <option value="date_added" selected>Date Added</option>
+                <option value="click_count">Click Count</option>
+              </select>
+              <button class="btn btn-outline-primary" type="submit">Search</button>
+          </form>
+          </ul>
         </div>
-    </div>
+      </div>
+  </div>
 </nav>
+<div class="container">
+  <div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+      <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+    </svg>
+    <h1>5</h1>
+    <p>Total Clicks</p>
+  </div>
+</div>
 <div class="container mt-5">
   <div class="row justify-content-between">
     <div class="col-2">
@@ -46,7 +66,11 @@ ${link_data.map(link =>
     <div class="card-body">
       <div class="row justify-content-between">
         <div class="col-2">
-          ${link.title}
+          ${link.title === null ?
+          `${link.target_url}`
+          :
+          `${link.title}`
+          }
         </div>
         <div class="col-2">
           ${link.target_url}
@@ -55,7 +79,11 @@ ${link_data.map(link =>
           <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
         </div>
         <div class="col-2">
-          <a class="customLink" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>
+          ${link.custom_link === null ?
+          `<a class="customLink" href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>`
+          :
+          `<a class="customLink" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>`
+          }
           <button class="btn btn-outline-primary btn-sm mt-2 copyButton" id="${link.id}">Copy</button>
         </div>
         <div class="col-2">
@@ -86,9 +114,9 @@ ${link_data.map(link =>
           <form action="/links/update" method="POST">
             <input type="hidden" name="id" value="${link.id}">
             <label for="title">Title</label>
-            <input name="title" id="title" type="text" class="form-control mb-1" value="${link.title}">
+            <input name="title" id="title" type="text" class="form-control mb-1" value="${link.title === null ? `${link.target_url}` : `${link.title}`}">
             <label class="d-flex align-items-center mb-3"> https://linkify.com/
-              <input name="custom_url" type="text" class="form-control ms-1" value="${link.custom_link}">
+              <input name="custom_url" type="text" class="form-control ms-1" value="${link.custom_link === null ? `${link.uuid}` : `${link.custom_link}`}">
             </label>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary ms-1">Update</button>
