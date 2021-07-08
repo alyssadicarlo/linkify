@@ -188,7 +188,6 @@ class LinksModel {
         }
     }
 
-
     static async deleteUserLinks(user_id) {
         try {
             const response = await db.result(

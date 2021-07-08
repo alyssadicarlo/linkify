@@ -111,7 +111,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 clicks_per_day: clicksPerDay
             },
             partials: {
-                body: "partials/dashboard"
+                body: "partials/dashboard",
+                failure: 'partials/blank'
             }
         })
     }
@@ -172,7 +173,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 clicks_per_day: clicksPerDay
             },
             partials: {
-                body: "partials/dashboard"
+                body: "partials/dashboard",
+                failure: 'partials/blank'
             }
         })
     }
@@ -260,11 +262,48 @@ router.post("/custom_add", async (req,res)=>{
         const titleString = title[0] + title.slice(1).replace(/'/g, "''");
         //Run addLink function of link model
         const response = await LinkModel.addCustomLink(userID, uuid, custom_link, url, titleString);
-        res.redirect('/links/dashboard');
+        if (response.rowCount === 1) {
+            res.redirect('/links/dashboard');
+        } else {
+            const user_id = await req.session.user_id
+            const linkData = await LinkModel.getBy(user_id, "date_added");
+            const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
+            const totalUserClicks = userClicksResponse.length;
+            res.render("template", {
+                locals: {
+                    title: "Dashboard",
+                    is_logged_in: req.session.is_logged_in,
+                    user_first_name: req.session.first_name,
+                    link_data: linkData,
+                    click_count: totalUserClicks
+                },
+                partials: {
+                    body: "partials/dashboard",
+                    failure: 'partials/dashboard-failure'
+                }
+            });
+        }
     }
     else
     {
         console.log("This is not a valid URL!");
+        const user_id = await req.session.user_id
+        const linkData = await LinkModel.getBy(user_id, "date_added");
+        const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
+        const totalUserClicks = userClicksResponse.length;
+        res.render("template", {
+            locals: {
+                title: "Dashboard",
+                is_logged_in: req.session.is_logged_in,
+                user_first_name: req.session.first_name,
+                link_data: linkData,
+                click_count: totalUserClicks
+            },
+            partials: {
+                body: "partials/dashboard",
+                failure: 'partials/dashboard-notvalid'
+            }
+        });
     }
 })
 
