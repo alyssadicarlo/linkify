@@ -63,7 +63,11 @@ router.post("/edit", async (req, res) => {
     //Get everything else from req.body
     const { first_name, last_name, email, password, password_confirm } = req.body;
     if (!!first_name) {
-        const response = await UserModel.editName(user_id, first_name, last_name);
+        //Escape any apostrophes in first or last names
+        const firstString = first_name[0] + first_name.slice(1).replace(/'/g, "''");
+        const lastString = last_name[0] + last_name.slice(1).replace(/'/g, "''");
+
+        const response = await UserModel.editName(user_id, firstString, lastString);
         req.session.first_name = first_name;
         req.session.last_name = last_name;
     } else if (!!email) {
@@ -120,7 +124,11 @@ router.post("/signup", async (req,res)=>{
         const salt = bcrypt.genSaltSync();
         const hash = bcrypt.hashSync(password, salt);
 
-        const response = await UserModel.addUser(first_name, last_name, email, hash);
+        //Escape any apostrophes in first or last names
+        const firstString = first_name[0] + first_name.slice(1).replace(/'/g, "''");
+        const lastString = last_name[0] + last_name.slice(1).replace(/'/g, "''");
+
+        const response = await UserModel.addUser(firstString, lastString, email, hash);
         console.log("POST ROUTE RESPONSE: ", response);
         if(!!response.id)
         {
