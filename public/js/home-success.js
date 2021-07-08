@@ -6,9 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyButton = document.querySelector('#copyButton');
 
     copyButton.addEventListener('click', () => {
-        target_url.select();
-        document.execCommand("copy");
+        const copyText = target_url.value;
+        copyToClipboard(copyText);
         copyButton.classList = "btn btn-outline-success";
         copyButton.innerHTML = "Copied";
     });
+
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            console.log("SUCCESS");
+    }, function() {
+            console.log("FAIL");
+    });
+}
 });
