@@ -18,6 +18,7 @@ Users can generate random-character urls from the homepage or login to create, u
 - dotenv
 - pg-promise
 - nanoid
+- moment
  
 <!-- ## Screenshots
 ![TITLE](url) -->
