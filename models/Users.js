@@ -111,6 +111,20 @@ class UsersModel {
             return error;
         }
     }
+
+    static async deleteUser(user_id) {
+        try {
+            const response = await db.result(`
+                DELETE FROM users
+                WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
 }
 
 module.exports = UsersModel;

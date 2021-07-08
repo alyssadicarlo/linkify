@@ -3,6 +3,7 @@
 const express = require("express");
 const UserModel = require("../models/Users");
 const bcrypt = require("bcryptjs");
+const LinksModel = require("../models/Links");
 
 //create a router
 const router = express.Router();
@@ -56,6 +57,7 @@ router.get("/profile", (req, res) => {
     })
 })
 
+//POST edit user details
 router.post("/edit", async (req, res) => {
     //Get user id from req.session
     const user_id = req.session.user_id;
@@ -86,6 +88,15 @@ router.post("/edit", async (req, res) => {
         }
     }
     res.redirect('/users/profile');
+})
+
+//POST delete user
+router.post("/delete", async (req, res) => {
+    const user_id = req.session.user_id;
+    const deleteLinks = await LinksModel.deleteUserLinks(user_id);
+    const deleteUser = await UserModel.deleteUser(user_id);
+    req.session.destroy();
+    res.redirect('/');
 })
 
 //POST login

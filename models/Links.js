@@ -204,6 +204,18 @@ class LinksModel {
             console.log("ERROR: ", error);
         }
     }
+
+    static async deleteUserLinks(user_id) {
+        try {
+            const response = await db.result(
+                `DELETE FROM links
+                WHERE userID = ${user_id};`
+            )
+            return response;
+        } catch(error) {
+            console.log("ERROR: ", error);
+        }
+    }
 }
 
 module.exports = LinksModel;
