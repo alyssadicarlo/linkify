@@ -25,12 +25,55 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
     const totalUserClicks = userClicksResponse.length;
 
+    //TOTAL CLICKS PER USER FOR THE LAST 7 DAY
+    //FIRST ELEMENT IS TOTAL CLICKS FROM 7 DAYS AGO
+    //LAST ELEMENT IS TOTACL CLICKS FROM TODAY
+
+    //create clicksPerDay array - int array of size 7
+    let clicksPerDay = [0,0,0,0,0,0,0];
+
+    //for each day in the past 7 days (ending with today), total up the number of clicks that have a date matching that day
+    let lastSevenDays = [];
+    for(let i = 6; i > -1; i--)
+    {
+        const day_date = new Date();
+        day_date.setDate(day_date.getDate() - i);
+        
+        lastSevenDays.push(day_date);
+    }
+    lastSevenDays.join(',');
+
+    userClicksResponse.forEach(click => {
+        const click_date = new Date(click.date_added);
+
+        for(let i = 0; i < 7; i++)
+        {
+            let weekday = new Date(lastSevenDays[i]);
+            if(onSameDay(click_date, weekday))
+            {
+                clicksPerDay[i] += 1;
+            }
+        }
+
+    });
+    
+    //assign that to the array
+    let linkQueryData = null;
 
     //if there is a search parameter
     if(!!req.query.search)
     {
         //Return the links matching the search parameter & sort type
-        const linkQueryData = await LinkModel.searchLinks(req.query.search, req.session.user_id, sort);
+        
+        if(sort !== "click_count")
+        {
+            linkQueryData = await LinkModel.searchLinks(req.query.search, req.session.user_id, sort);
+        }
+        else
+        {
+            linkQueryData = await LinkModel.searchLinks(req.query.search, req.session.user_id, "date_added");
+            //sort the returned data by click count
+        }
 
         //Get total clicks for each link from the Clicks model
 
@@ -47,7 +90,6 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
             {
                 click_count = linkClicks.length;
             }
-            //console.log(click_count);
             
             //create a LinkModel Instance using the link query data/calculated click count
             const newLinkModel = new LinkModel(link.id,link.userID,link.uuid,link.custom_link,link.target_url,link.title,link.date_added, click_count);
@@ -65,7 +107,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
-                total_click_count: totalUserClicks
+                total_click_count: totalUserClicks,
+                clicks_per_day: clicksPerDay
             },
             partials: {
                 body: "partials/dashboard"
@@ -75,8 +118,16 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     else
     {
         //Get the link data by current userID, sorted by sort type
-        const user_id = await req.session.user_id
-        const linkQueryData = await LinkModel.getBy(user_id, sort);
+        const user_id = await req.session.user_id;
+        if(sort !== "click_count")
+        {
+            linkQueryData = await LinkModel.getBy(user_id, sort);
+        }
+        else
+        {
+            linkQueryData = await LinkModel.getBy(user_id, "date_added");
+        }
+        
 
         //Get total clicks for each link from the Clicks model
 
@@ -101,9 +152,15 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
             //add it to the linkData list
             linkData.push(newLinkModel);
         }
-
-        //console.log(linkData);
         
+        //sort the returned data by click count if that is the option
+        if(sort === "click_count")
+        {
+            linkData = linkData.sort((a,b) => (a.click_count < b.click_count) ? 1 : -1);
+        }
+        
+
+
         //render the template with the provided data
         res.render("template", {
             locals: {
@@ -111,7 +168,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
-                total_click_count: totalUserClicks
+                total_click_count: totalUserClicks,
+                clicks_per_day: clicksPerDay
             },
             partials: {
                 body: "partials/dashboard"
@@ -234,6 +292,11 @@ function isValidURL(string) {
     var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
     return (res !== null)
   };
+
+function onSameDay(first,second)
+{
+    return first.getFullYear() === second.getFullYear() && first.getMonth() === second.getMonth() && first.getDate() === second.getDate();
+}
 
 //export the router for use in the app
 module.exports = router;
