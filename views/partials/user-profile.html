@@ -2,21 +2,21 @@ ${!!is_logged_in ? `
 <h1>User Profile</h1>
 <div class="mb-2">
     <h4>Name: ${sessionData.first_name} ${sessionData.last_name}</h4>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nameModal">
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#nameModal">
         Edit Name
     </button>
 </div>
 
 <div class="mb-2">  
     <h4>Email: ${sessionData.email}</h4>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emailModal">
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#emailModal">
         Edit Email
     </button>
 </div>
 
 <div class="mb-2">
     <h4>Password: (hidden)</h4>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#passwordModal">
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#passwordModal">
         Edit Password
     </button>
 </div>
@@ -41,7 +41,7 @@ ${!!is_logged_in ? `
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-outline-primary">Save changes</button>
             </div>
         </form>
       </div>
@@ -64,7 +64,7 @@ ${!!is_logged_in ? `
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-outline-primary">Save changes</button>
             </div>
         </form>
       </div>
@@ -91,7 +91,7 @@ ${!!is_logged_in ? `
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-outline-primary">Save changes</button>
             </div>
         </form>
       </div>
