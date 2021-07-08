@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('resize', (event) => {
-        console.log(event.target.innerWidth);
         if (event.target.innerWidth <= 991) {
             filterForm.classList = "";
         } else {
