@@ -70,7 +70,7 @@ router.post("/edit", async (req, res) => {
         const firstString = first_name[0] + first_name.slice(1).replace(/'/g, "''");
         const lastString = last_name[0] + last_name.slice(1).replace(/'/g, "''");
 
-        const response = await UserModel.editName(user_id, firstString, lastString);
+        const response = await UserModel.editName(user_id, firstString.trim(), lastString.trim());
         req.session.first_name = first_name;
         req.session.last_name = last_name;
     } else if (!!email) {
