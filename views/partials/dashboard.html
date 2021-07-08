@@ -203,20 +203,16 @@ ${link_data.map(link =>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   const click_data = '${click_data}';
-  const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-  ];
+  const last7days = '${last7Days}';
+
+  const labels = last7days.split(',');
+
   const data = {
     labels: labels,
     datasets: [{
       label: 'Link Clicks Per Day',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgb(13, 110, 253)',
+      borderColor: 'rgb(13, 110, 253)',
       data: click_data.split(','),
     }]
   };
@@ -231,4 +227,5 @@ ${link_data.map(link =>
       document.getElementById('myChart'),
       config
   );
+
 </script>
