@@ -1,0 +1,102 @@
+${!!is_logged_in ? `
+<h1>User Profile</h1>
+<div class="mb-2">
+    <h4>Name: ${sessionData.first_name} ${sessionData.last_name}</h4>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nameModal">
+        Edit Name
+    </button>
+</div>
+
+<div class="mb-2">  
+    <h4>Email: ${sessionData.email}</h4>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emailModal">
+        Edit Email
+    </button>
+</div>
+
+<div class="mb-2">
+    <h4>Password: (hidden)</h4>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#passwordModal">
+        Edit Password
+    </button>
+</div>
+
+<div class="modal fade" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="nameModalLabel">Edit Name</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/users/edit" method="POST">
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input name="first_name" type="text" class="form-control" id="first_name" value="${sessionData.first_name}">
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input name="last_name" type="text" class="form-control" id="last_name" value="${sessionData.last_name}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="emailModalLabel">Edit Email Address</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/users/edit" method="POST">
+                <div class="mb-3">
+                    <label for="email" class="form-label">First Name</label>
+                    <input name="email" type="email" class="form-control" id="email" value="${sessionData.email}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="passwordModalLabel">Edit Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/users/edit" method="POST">
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="password">
+                  </div>
+                  <div class="mb-3">
+                    <label for="password_confirm" class="form-label">Confirm Password</label>
+                    <input name="password_confirm" type="password" class="form-control" id="password_confirm">
+                  </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>`
+  : 
+  `<h1>Please <a href="/users/login">login</a> to view this page!</h1>`
+}
