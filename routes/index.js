@@ -4,25 +4,26 @@ const express = require('express');
 const router = express.Router();
 const UserModel = require("../models/Users");
 const LinkModel = require("../models/Links");
+const ClicksModel = require("../models/Clicks");
 
 //route for home page and redirect
 router.get('/:redirect?', async (req, res) => {
     //if there is a redirect
     if(!!req.params.redirect)
     {
-        console.log(req.params.redirect);
-        //get target URL
+        //console.log(req.params.redirect);
+
+        //Get the ID of the link we are interacting with
+        const linkID = await LinkModel.getLinkID(req.params.redirect);
+        
+        //Create new Click in DB with the associated linkID
+        const response = await ClicksModel.addClick(linkID.id);
+
+        //Get target URL
         const targetURL = await LinkModel.getTargetUrl(req.params.redirect);
-        //Update click count for the uuid
-        const response = await LinkModel.updateClicks(req.params.redirect);
-        //Find the user associated with this uuid
-        const thisUser = await LinkModel.findUser(req.params.redirect);
-        //Increment the user's total clicks by one
-        const addTotal = await UserModel.updateTotalClicks(thisUser.userid);
-        console.log(targetURL);
-        //console.log(targetURL.target_url);
+
+        //redirect to the target URL
         res.redirect(targetURL.target_url);
-        //res.redirect(targetURL.target_url);
     }
     else
     {

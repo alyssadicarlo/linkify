@@ -4,13 +4,12 @@ const db = require('./conn');
 const bcrypt = require('bcryptjs');
 
 class UsersModel {
-    constructor(id, first_name, last_name, email, password, total_clicks) {
+    constructor(id, first_name, last_name, email, password) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
-        this.total_clicks = total_clicks;
     }
 
     checkPassword(hashedPassword) {
@@ -97,11 +96,10 @@ class UsersModel {
         }
     }
 
-    static async updateTotalClicks(user_id) {
+    static async deleteUser(user_id) {
         try {
             const response = await db.result(`
-                UPDATE users
-                SET total_clicks = total_clicks + 1
+                DELETE FROM users
                 WHERE id = ${user_id};`
             )
         return response;
@@ -111,6 +109,7 @@ class UsersModel {
             return error;
         }
     }
+
 }
 
 module.exports = UsersModel;

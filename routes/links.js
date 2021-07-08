@@ -2,9 +2,9 @@
 
 //imports
 const express = require("express");
-const UserModel = require("../models/Users");
 const LinkModel = require("../models/Links");
 const {nanoid} = require("nanoid");
+const ClicksModel = require("../models/Clicks");
 
 //create a router 
 const router = express.Router();
@@ -14,27 +14,33 @@ const router = express.Router();
 router.get("/dashboard/:search?:sort?", async (req,res)=>{
 
     //render dashboard page
-    console.log(req.query.search);
-    console.log(req.query.sort);
+    //Get the sort type selected, if none selected default to date_added
     let sort = req.query.sort;
     if(!sort)
     {
         sort = "date_added";
     }
-    //console.log(linkData);
+
+    //Get total clicks for current user from the Clicks model
+    const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
+    const totalUserClicks = userClicksResponse.length;
+
+    //Get total clicks for each link from the Clicks model
+
+    //if there is a search parameter
     if(!!req.query.search)
     {
-        //console.log(req.query.search);
-        
-        //pass links data (date added by default)
+        //Return the links matching the search parameter & sort type
         const linkData = await LinkModel.searchLinks(req.query.search, req.session.user_id, sort);
-        console.log(linkData);
+        
+        //render the template with the provided link data
         res.render("template", {
             locals: {
                 title: "Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
-                link_data: linkData
+                link_data: linkData,
+                click_count: totalUserClicks
             },
             partials: {
                 body: "partials/dashboard",
@@ -44,16 +50,18 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     }
     else
     {
-        //pass links data (date added by default)
-        console.log("no search or sort");
+        //Get the link data by current userID, sorted by sort type
         const user_id = await req.session.user_id
         const linkData = await LinkModel.getBy(user_id, sort);
+        
+        //render the template with the provided data
         res.render("template", {
             locals: {
                 title: "Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
-                link_data: linkData
+                link_data: linkData,
+                click_count: totalUserClicks
             },
             partials: {
                 body: "partials/dashboard",
