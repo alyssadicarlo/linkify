@@ -91,6 +91,14 @@ router.post("/edit", async (req, res) => {
     res.redirect('/users/profile');
 })
 
+//POST edit user avatar
+router.post("/editAvatar", async (req, res) => {
+    req.session.avatar = req.body.avatar
+    console.log(req.session.user_id)
+    const response = await UserModel.editAvatar(req.session.user_id, req.body.avatar)
+    res.redirect('/users/profile')
+})
+
 //POST delete user
 router.post("/delete", async (req, res) => {
     const user_id = req.session.user_id;
@@ -105,19 +113,20 @@ router.post("/login", async (req,res)=>{
     const {email, password} = req.body;
 
     //CHANGE TO CORRECT CONSTRUCTOR//
-    const user = new UserModel(null, null, null, email, password, null);
+    const user = new UserModel(null, null, null, email, password, null, null);
 
     const response = await user.login();
     console.log("USER LOGIN RESPONSE: ", response);
 
     if(response.isValid)
     {
-        const {isValid, user_id, first_name, last_name, email} = response;
+        const {isValid, user_id, first_name, last_name, email, avatar} = response;
         req.session.is_logged_in = isValid;
         req.session.user_id = user_id;
         req.session.first_name = first_name;
         req.session.last_name = last_name;
         req.session.email = email;
+        req.session.avatar = avatar;
         res.redirect("/links/dashboard");
     }
     else
