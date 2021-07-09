@@ -84,4 +84,6 @@ canvas {
             filter: none;
 }
 
-
+.page-wrapper > .navbar {
+    display: flex;
+}

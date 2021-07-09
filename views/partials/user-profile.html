@@ -1,3 +1,4 @@
+
 ${!!is_logged_in ? `
 <h1>User Profile</h1>
 <div class="row">
@@ -5,29 +6,24 @@ ${!!is_logged_in ? `
       <div class="mb-2">
         <img src="/images/avatars/avatar${sessionData.avatar}.png" alt="user avatar"/> 
       </div>
-      <button id="avatarButton" class="btn btn-outline-primary btn-small" data-bs-toggle="modal" data-bs-target="#editAvatar">
-      Edit avatar</button>
+      <a href="#editAvatar" class="btn btn-primary btn-small" role="button">Edit Avatar</a>
+
   </div>
     <div class="col-6">
       <div class="mb-2">
         <h4>Name: ${sessionData.first_name} ${sessionData.last_name}</h4>
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#nameModal">
-            Edit Name
-        </button>
+        <a href="#nameModal" class="btn btn-primary" role="button">Edit Name</a>
     </div>
     
     <div class="mb-2">  
         <h4>Email: ${sessionData.email}</h4>
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#emailModal">
-            Edit Email
-        </button>
+        <a href="#emailModal" class="btn btn-primary" role="button">Edit Email</a>
+
     </div>
     
     <div class="mb-3">
         <h4>Password: (hidden)</h4>
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#passwordModal">
-            Edit Password
-        </button>
+        <a href="#passwordModal" class="btn btn-primary" role="button">Edit Password</a>
     </div>
   </div>
 </div>
@@ -35,148 +31,14 @@ ${!!is_logged_in ? `
 <div class="row">
   <div class="col-8">
     <a href="/links/dashboard" class="btn btn-outline-dark" role="button">Back to Dashboard</a>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUser">
-      Delete User
-    </button>
+    <a href="#deleteUser" class="btn btn-danger" role="button">Delete User</a>
   </div>
   <div class="col-3">
     
   </div>
 </div>
 
-<div class="modal fade" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="nameModalLabel">Edit Name</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="/users/edit" method="POST">
-                <div class="mb-3">
-                    <label for="first_name" class="form-label">First Name</label>
-                    <input name="first_name" type="text" class="form-control" id="first_name" value="${sessionData.first_name}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="last_name" class="form-label">Last Name</label>
-                    <input name="last_name" type="text" class="form-control" id="last_name" value="${sessionData.last_name}" required>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-outline-primary">Save changes</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="emailModalLabel">Edit Email Address</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="/users/edit" method="POST">
-                <div class="mb-3">
-                    <label for="email" class="form-label">First Name</label>
-                    <input name="email" type="email" class="form-control" id="email" value="${sessionData.email}" required>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-outline-primary">Save changes</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="passwordModalLabel">Edit Password</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="/users/edit" method="POST">
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input name="password" type="password" class="form-control" id="password" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="password_confirm" class="form-label">Confirm Password</label>
-                    <input name="password_confirm" type="password" class="form-control" id="password_confirm" required>
-                  </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-outline-primary">Save changes</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  
-  <div class="modal fade" id="deleteUser" tabindex="-1" aria-labelledby="deleteUserLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteUserLabel">Are you sure?</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="/users/delete" method="POST">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Exit</button>
-              <button type="submit" class="btn btn-outline-primary ms-1">Yes</button>
-            </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="modal fade" id="editAvatar" tabindex="-1" aria-labelledby="editAvatarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editAvatarLabel">Choose your Avatar</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="/users/editAvatar" method="POST">
-    
-            <div class="avatar-selector">
-                <input id="avatar1" type="radio" name="avatar" value="1" />
-                <label class="avatarClass avatar1" for="avatar1"></label>
-                <input id="avatar2" type="radio" name="avatar" value="2" />
-                <label class="avatarClass avatar2"for="avatar2"></label>
-                <input id="avatar3" type="radio" name="avatar" value="3" />
-                <label class="avatarClass avatar3" for="avatar3"></label>
-                <input id="avatar4" type="radio" name="avatar" value="4" />
-                <label class="avatarClass avatar4"for="avatar4"></label>
-                <input id="avatar5" type="radio" name="avatar" value="5" />
-                <label class="avatarClass avatar5" for="avatar5"></label>
-                <input id="avatar6" type="radio" name="avatar" value="6" />
-                <label class="avatarClass avatar6"for="avatar6"></label>
-                <input id="avatar7" type="radio" name="avatar" value="7" />
-                <label class="avatarClass avatar7" for="avatar7"></label>
-                <input id="avatar8" type="radio" name="avatar" value="8" />
-                <label class="avatarClass avatar8"for="avatar8"></label>
-                <input id="avatar9" type="radio" name="avatar" value="9" />
-                <label class="avatarClass avatar9" for="avatar9"></label>
-            </div>
-       
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-outline-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>`
+`
   : 
   `<h1>Please <a href="/users/login">login</a> to view this page!</h1>`
 }

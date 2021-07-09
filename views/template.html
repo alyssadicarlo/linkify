@@ -10,17 +10,11 @@
     <link rel="icon" href="/images/favicon.ico"/>
   </head>
 <body>
+  ${modals}
     <div class="page-wrapper with-navbar">
     <nav class="navbar justify-content-between">
         <div class="navbar-content">
-            <a class="navbar-brand" href="/"><img height=40 src="/images/linkify1.png"></a>
-            ${!!is_logged_in ?
-              `<ul class="navbar-nav d-none d-md-flex">
-              <li class="nav-item">
-                <a class="nav-link" href="/links/dashboard">Dashboard</a>
-              </li></ul>`
-              :
-              ``}
+            <a class="navbar-brand" href="/"><img src="/images/linkify1.png" style="height: 40px;"></a>
         </div>
 
         <div class="navbar-content ml-auto"> <!-- d-md-none = display: none on medium screens and up (width > 768px), ml-auto = margin-left: auto -->
@@ -30,24 +24,26 @@
                   <img width=40 src="/images/avatars/avatar${avatar}.png" style="border-radius: 50%;">
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                    <a class="dropdown-item" href="/links/dashboard">Dashboard</a>
                     <a class="dropdown-item" href="/users/profile">Profile</a>
                     <a class="dropdown-item" href="/users/logout">Logout</a>
                   </div>
               </div>`
           :
-            `
+            ` 
               <a class="nav-link" href="/users/login">Login</a>
               <a class="nav-link" href="/users/signup">Signup</a>
               `
           } 
           </div>
       </nav>
-
     <div class="content-wrapper container mb-5">
       <div class="masthead" style="min-height: 50px;"></div>
         ${body}
-        <button class="btn btn-primary" type="button" onclick="toggleDemo()">Click me!</button>
       </div>
+      <nav class="navbar navbar-fixed-bottom">
+        <button class="btn" type="button" onclick="toggleDemo()">Toggle Darkmode</button>
+      </nav>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
     <script type="text/javascript">
