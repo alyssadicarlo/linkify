@@ -8,7 +8,27 @@ canvas {
     max-height: 350px;
 }
 
+@media screen and (max-width: 991px) {
+    
+    #mobileDash {
+        display: block !important;
+    }
+
+    #desktopDash {
+        display: none !important;
+    }
+
+    #mobileNav {
+        display: block !important;
+    }
+
+    #desktopNav {
+        display: none !important;
+    }
+}
+
 @media screen and (max-width: 768px) {
+    
     .reverse {
         flex-direction: column-reverse;
     }

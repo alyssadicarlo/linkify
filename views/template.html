@@ -13,9 +13,24 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:white;">
         <div class="container-fluid">
             <a class="navbar-brand" href="/"><img height=40 src="/images/linkify.png"></a>
+            <div class="d-flex">
+            ${!!is_logged_in ? 
+              `<div id="mobileNav" class="btn-group d-none">
+                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                  <img width=40 src="/images/avatars/avatar${avatar}.png" style="border-radius: 50%;">
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="/users/profile">Profile</a></li>
+                  <li><a class="dropdown-item" href="/users/logout">Logout</a></li>
+                </ul>
+              </div>`
+            :
+              ``
+            }
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
+            </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -31,7 +46,7 @@
               <div class="d-flex">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   ${!!is_logged_in ? 
-                    `<div class="btn-group">
+                    `<div id="desktopNav" class="btn-group">
                       <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                         <img width=40 src="/images/avatars/avatar${avatar}.png" style="border-radius: 50%;">
                       </button>
