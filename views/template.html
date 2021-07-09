@@ -20,25 +20,20 @@
                   <img width=40 src="/images/avatars/avatar${avatar}.png" style="border-radius: 50%;">
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="/links/dashboard">Dashboard</a></li>
                   <li><a class="dropdown-item" href="/users/profile">Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="/users/logout">Logout</a></li>
                 </ul>
               </div>`
             :
-              ``
+              `<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>`
             }
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                ${!!is_logged_in ?
-                `<li class="nav-item">
-                  <a class="nav-link" href="/links/dashboard">Dashboard</a>
-                </li>`
-                :
-                ``}
               </ul>
               <div class="d-flex">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -48,6 +43,7 @@
                         <img width=40 src="/images/avatars/avatar${avatar}.png" style="border-radius: 50%;">
                       </button>
                       <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <li><a class="dropdown-item" href="/links/dashboard">Dashboard</a></li>
                         <li><a class="dropdown-item" href="/users/profile">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/users/logout">Logout</a></li>
