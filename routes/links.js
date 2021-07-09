@@ -340,12 +340,13 @@ router.post("/update", async (req,res)=>{
     res.redirect('/links/dashboard');
 })
 
-//POST delete
+//POST delete link
 router.post("/delete", async (req,res)=>{
     //Get link ID to delete
     const { id } = req.body;
     //Run deleteLink function of link model
-    const response = await LinkModel.deleteLink(id)
+    const clickResponse = await ClicksModel.deleteLinkClicks(id);
+    const linkResponse = await LinkModel.deleteLink(id);
     res.redirect('/links/dashboard');
 })
 
