@@ -115,20 +115,11 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 title: "Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
-<<<<<<< HEAD
                 link_data: linkData,
-                total_click_count: totalUserClicks,
+                total_user_click_count: totalUserClicks,
                 clicks_per_day: clicksPerDay,
-                click_count: totalUserClicks,
                 click_data: clicksPerDay,
                 last7Days: last7Days(),
-=======
-                link_data: linkData
-                total_click_count: totalUserClicks,
-                click_count: totalUserClicks,
-                click_data: clicksPerDay,
-                last7Days: last7Days()
->>>>>>> a400639fb99797b8881b8fea7d6036d741c3960b
             },
             partials: {
                 body: "partials/dashboard",
@@ -189,8 +180,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
-                total_click_count: totalUserClicks,
-                click_count: totalUserClicks,
+                total_user_click_count: totalUserClicks,
                 click_data: clicksPerDay,
                 last7Days: last7Days()
             },
