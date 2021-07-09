@@ -32,7 +32,8 @@ router.get('/:redirect?', async (req, res) => {
             locals: {
                 title: 'Home Page',
                 is_logged_in: req.session.is_logged_in,
-                user_first_name: req.session.first_name
+                user_first_name: req.session.first_name,
+                avatar: req.session.avatar
             },
             partials: {
                 body: 'partials/home'
