@@ -1,15 +1,17 @@
+<div class="container">
 <h1>Log In</h1>
 ${failure}
 <form action="/users/login" method="POST">
-    <div class="mb-3">
+    <div class="mb-10">
       <label for="email" class="form-label">Email address</label>
       <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
       <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
-    <div class="mb-3">
+    <div class="mb-10">
       <label for="password" class="form-label">Password</label>
       <input name="password" type="password" class="form-control" id="password">
     </div>
     <button type="submit" class="btn btn-primary">Log In</button>
     <a href="/users/signup">Don't have an account? Sign up</a>
 </form>
+</div>

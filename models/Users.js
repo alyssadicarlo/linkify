@@ -126,6 +126,39 @@ class UsersModel {
         }
     }
 
+    static async addToCharShortened(user_id, amount_to_add)
+    {
+        //add the amount_to_add to the characters_shortened column of the user table at the provided ID
+        try {
+            const response = await db.result(`
+                UPDATE users
+                    SET characters_shortened = characters_shortened + '${amount_to_add}'
+                    WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
+    static async getTotalCharactersShortened(user_id)
+    {
+        //return the characters_shortened column for the provided user ID
+        try {
+            const response = await db.result(`
+                SELECT characters_shortened
+                FROM users
+                WHERE id = ${user_id};`
+            )
+        return response;
+        
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
 }
 
 module.exports = UsersModel;

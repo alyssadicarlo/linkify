@@ -1,43 +1,43 @@
 
 ${!!is_logged_in ? `
-<h1>User Profile</h1>
-<div class="row">
-  <div class="col-6 pt-3 text-center">
-      <div class="mb-2">
-        <img src="/images/avatars/avatar${sessionData.avatar}.png" alt="user avatar"/> 
+<div class="container">
+  <h1>User Profile</h1>
+    <div class="row">
+      <div class="col-6 pt-3 text-center">
+          <div class="mb-2">
+            <img src="/images/avatars/avatar${sessionData.avatar}.png" alt="user avatar"/> 
+          </div>
+          <a href="#editAvatar" class="btn btn-primary btn-small" role="button">Edit Avatar</a>
+
       </div>
-      <a href="#editAvatar" class="btn btn-primary btn-small" role="button">Edit Avatar</a>
+        <div class="col-6">
+          <div class="mb-2">
+            <h4>Name: ${sessionData.first_name} ${sessionData.last_name}</h4>
+            <a href="#nameModal" class="btn btn-primary" role="button">Edit Name</a>
+        </div>
+        
+        <div class="mb-2">  
+            <h4>Email: ${sessionData.email}</h4>
+            <a href="#emailModal" class="btn btn-primary" role="button">Edit Email</a>
 
-  </div>
-    <div class="col-6">
-      <div class="mb-2">
-        <h4>Name: ${sessionData.first_name} ${sessionData.last_name}</h4>
-        <a href="#nameModal" class="btn btn-primary" role="button">Edit Name</a>
+        </div>
+        
+        <div class="mb-3">
+            <h4>Password: (hidden)</h4>
+            <a href="#passwordModal" class="btn btn-primary" role="button">Edit Password</a>
+        </div>
+      </div>
     </div>
-    
-    <div class="mb-2">  
-        <h4>Email: ${sessionData.email}</h4>
-        <a href="#emailModal" class="btn btn-primary" role="button">Edit Email</a>
-
-    </div>
-    
-    <div class="mb-3">
-        <h4>Password: (hidden)</h4>
-        <a href="#passwordModal" class="btn btn-primary" role="button">Edit Password</a>
-    </div>
+    <hr>
+    <div class="row">
+      <div class="col-8">
+        <a href="/links/dashboard" class="btn btn-outline-dark" role="button">Back to Dashboard</a>
+        <a href="#deleteUser" class="btn btn-danger" role="button">Delete User</a>
+      </div>
+      <div class="col-3">
+      </div>
   </div>
 </div>
-<hr>
-<div class="row">
-  <div class="col-8">
-    <a href="/links/dashboard" class="btn btn-outline-dark" role="button">Back to Dashboard</a>
-    <a href="#deleteUser" class="btn btn-danger" role="button">Delete User</a>
-  </div>
-  <div class="col-3">
-    
-  </div>
-</div>
-
 `
   : 
   `<h1>Please <a href="/users/login">login</a> to view this page!</h1>`

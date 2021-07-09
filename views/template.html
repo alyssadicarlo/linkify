@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="icon" href="/images/favicon.ico"/>
   </head>
-<body>
+<<body data-set-preferred-mode-onload="true">
   ${modals}
     <div class="page-wrapper with-navbar">
     <nav class="navbar justify-content-between">
@@ -37,9 +37,9 @@
           } 
           </div>
       </nav>
-    <div class="content-wrapper container mb-5">
-      <div class="masthead" style="min-height: 50px;"></div>
+    <div class="content-wrapper mb-5">
         ${body}
+        <div class="posthead" style="min-height: 50px;"></div>
       </div>
       <nav class="navbar navbar-fixed-bottom">
         <button class="btn" type="button" onclick="toggleDemo()">Toggle Darkmode</button>
@@ -50,6 +50,17 @@
       // Dark mode toggle demo
       function toggleDemo() {
         halfmoon.toggleDarkMode();
+      }
+    </script>
+    <script type="text/javascript">
+      // Make sure that the cookie exists
+      if (halfmoon.readCookie("halfmoon_preferredMode")) {
+        if (halfmoon.readCookie("halfmoon_preferredMode") == "light-mode") {
+          // Light mode is preferred
+        }
+        else if (halfmoon.readCookie("halfmoon_preferredMode") == "dark-mode") {
+          // Dark mode is preferred
+        }
       }
     </script>
   </body>

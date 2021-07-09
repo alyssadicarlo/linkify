@@ -6,6 +6,7 @@ const moment = require('moment');
 const LinkModel = require("../models/Links");
 const {nanoid} = require("nanoid");
 const ClicksModel = require("../models/Clicks");
+const UsersModel = require("../models/Users");
 
 //create a router 
 const router = express.Router();
@@ -33,6 +34,14 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     //Get total clicks for current user from the Clicks model
     const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
     const totalUserClicks = userClicksResponse.length;
+    //Get total characters shortened
+    const totalCharsResponse = await UsersModel.getTotalCharactersShortened(req.session.user_id);
+    
+    let charactersShortened = -1;
+    if(totalCharsResponse.rowCount === 1)
+    {
+        charactersShortened = totalCharsResponse.rows[0].characters_shortened;
+    }
 
     //TOTAL CLICKS PER USER FOR THE LAST 7 DAY
     //FIRST ELEMENT IS TOTAL CLICKS FROM 7 DAYS AGO
@@ -68,6 +77,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     
     //assign that to the array
     let linkQueryData = null;
+
+    
 
     //if there is a search parameter
     if(!!req.query.search)
@@ -112,7 +123,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
         //render the template with the provided link data
         res.render("template", {
             locals: {
-                title: "Dashboard",
+                title: "Linkify | Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
@@ -120,7 +131,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 clicks_per_day: clicksPerDay,
                 click_data: clicksPerDay,
                 last7Days: last7Days(),
-                avatar: req.session.avatar
+                avatar: req.session.avatar,
+                characters_shortened: charactersShortened
             },
             partials: {
                 body: "partials/dashboard",
@@ -178,14 +190,15 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
         //render the template with the provided data
         res.render("template", {
             locals: {
-                title: "Dashboard",
+                title: "Linkify | Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
                 total_user_click_count: totalUserClicks,
                 click_data: clicksPerDay,
                 last7Days: last7Days(),
-                avatar: req.session.avatar
+                avatar: req.session.avatar,
+                characters_shortened: charactersShortened
             },
             partials: {
                 body: "partials/dashboard",
