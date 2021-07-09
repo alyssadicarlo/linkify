@@ -28,6 +28,14 @@ canvas {
 }
 
 @media screen and (max-width: 768px) {
+
+    .full-width, #filterForm, #filterForm input, #filterForm select, #filterForm button {
+        width: 100% !important;
+    }
+
+    #filterForm input, #filterForm select, #filterForm button {
+        margin-top: 4px;
+    }
     
     .reverse {
         flex-direction: column-reverse;

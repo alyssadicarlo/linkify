@@ -50,7 +50,7 @@ router.get("/logout", (req,res) => {
 router.get("/profile", (req, res) => {
     res.render("template", {
         locals: {
-            title: "User Profile",
+            title: `Linkify | ${req.session.first_name}'s Profile`,
             is_logged_in: req.session.is_logged_in,
             user_first_name: req.session.first_name,
             sessionData: req.session,

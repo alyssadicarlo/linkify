@@ -20,14 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!!filterForm) {
-        if (window.innerWidth <= 991) {
+        if (window.innerWidth <= 550) {
             filterForm.classList = "";
         } else {
             filterForm.classList = "d-flex";
         }
 
         window.addEventListener('resize', (event) => {
-            if (event.target.innerWidth <= 991) {
+            if (event.target.innerWidth <= 550) {
                 filterForm.classList = "";
             } else {
                 filterForm.classList = "d-flex";

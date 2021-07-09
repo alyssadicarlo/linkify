@@ -30,7 +30,7 @@ router.get('/:redirect?', async (req, res) => {
         console.log("no redirect");
         res.render('template', {
             locals: {
-                title: 'Home Page',
+                title: 'Linkify',
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 avatar: req.session.avatar
