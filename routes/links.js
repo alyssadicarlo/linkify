@@ -123,7 +123,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
         //render the template with the provided link data
         res.render("template", {
             locals: {
-                title: "Dashboard",
+                title: "Linkify | Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
@@ -189,7 +189,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
         //render the template with the provided data
         res.render("template", {
             locals: {
-                title: "Dashboard",
+                title: "Linkify | Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
@@ -246,7 +246,7 @@ router.post("/add", async (req,res)=>{
             
             res.render("template", {
                 locals: {
-                    title: "Home",
+                    title: "Linkify",
                     is_logged_in: req.session.is_logged_in,
                     user_first_name: req.session.first_name,
                     shortened_link: shortened_link,
@@ -317,7 +317,7 @@ router.post("/custom_add", async (req,res)=>{
             const totalUserClicks = userClicksResponse.length;
             res.render("template", {
                 locals: {
-                    title: "Dashboard",
+                    title: "Linkify | Dashboard",
                     is_logged_in: req.session.is_logged_in,
                     user_first_name: req.session.first_name,
                     link_data: linkData,
@@ -343,7 +343,7 @@ router.post("/custom_add", async (req,res)=>{
         const totalUserClicks = userClicksResponse.length;
         res.render("template", {
             locals: {
-                title: "Dashboard",
+                title: "Linkify | Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
