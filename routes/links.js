@@ -13,7 +13,7 @@ const router = express.Router();
 
 function last7Days() {
     let daysAgo = []
-    for(var i=7; i>0; i--) {
+    for(var i=6; i>=0; i--) {
         daysAgo.push(moment().subtract(i, 'days').format("MM DD"));
     }
     return daysAgo
