@@ -6,6 +6,7 @@ const moment = require('moment');
 const LinkModel = require("../models/Links");
 const {nanoid} = require("nanoid");
 const ClicksModel = require("../models/Clicks");
+const UsersModel = require("../models/Users");
 
 //create a router 
 const router = express.Router();
@@ -33,6 +34,14 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     //Get total clicks for current user from the Clicks model
     const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
     const totalUserClicks = userClicksResponse.length;
+    //Get total characters shortened
+    const totalCharsResponse = await UsersModel.getTotalCharactersShortened(req.session.user_id);
+    
+    let charactersShortened = -1;
+    if(totalCharsResponse.rowCount === 1)
+    {
+        charactersShortened = totalCharsResponse.rows[0].characters_shortened;
+    }
 
     //TOTAL CLICKS PER USER FOR THE LAST 7 DAY
     //FIRST ELEMENT IS TOTAL CLICKS FROM 7 DAYS AGO
@@ -68,6 +77,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     
     //assign that to the array
     let linkQueryData = null;
+
+    
 
     //if there is a search parameter
     if(!!req.query.search)
@@ -120,7 +131,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 clicks_per_day: clicksPerDay,
                 click_data: clicksPerDay,
                 last7Days: last7Days(),
-                avatar: req.session.avatar
+                avatar: req.session.avatar,
+                characters_shortened: charactersShortened
             },
             partials: {
                 body: "partials/dashboard",
@@ -184,7 +196,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
                 total_user_click_count: totalUserClicks,
                 click_data: clicksPerDay,
                 last7Days: last7Days(),
-                avatar: req.session.avatar
+                avatar: req.session.avatar,
+                characters_shortened: charactersShortened
             },
             partials: {
                 body: "partials/dashboard",
@@ -225,9 +238,12 @@ router.post("/add", async (req,res)=>{
             
         if(response.rowCount === 1)
         {
-            console.log("added a row!");
-            console.log("Here is your link: " + "www.linkify.com/" + uuid);
             const shortened_link = "127.0.0.1:3000/" + uuid;
+            let totalCharsShortened = Math.abs(target_url.length - shortened_link.length);
+            //update the total characters shortened column for the user
+            const charShortenedResponse = await UsersModel.addToCharShortened(userID, totalCharsShortened);
+
+            
             res.render("template", {
                 locals: {
                     title: "Home",
@@ -274,6 +290,20 @@ router.post("/custom_add", async (req,res)=>{
     let isURLValid = isValidURL(url);
     if(isURLValid)
     {
+        let totalCharsShortened = -1;
+        if(custom_link.length < uuid.length)
+        {
+            const customLinkFull = "127.0.0.1:3000/" + custom_link;
+            totalCharsShortened = Math.abs(target_url.length - customLinkFull.length);
+        }
+        else
+        {
+            const uuidLink = "127.0.0.1:3000/" + uuid;
+            totalCharsShortened = Math.abs(target_url.length - uuidLink.length);
+        }
+        //update the total characters shortened column for the user
+        const charShortenedResponse = await UsersModel.addToCharShortened(userID, totalCharsShortened);
+
         //Escape any ' that appear in the title
         const titleString = title[0] + title.slice(1).replace(/'/g, "''");
         //Run addLink function of link model
@@ -294,7 +324,8 @@ router.post("/custom_add", async (req,res)=>{
                     click_count: totalUserClicks,
                     click_data: clicksPerDay,
                     last7Days: last7Days(),
-                    avatar: req.session.avatar
+                    avatar: req.session.avatar,
+                    characters_shortened: charactersShortened
                 },
                 partials: {
                     body: "partials/dashboard",
@@ -319,7 +350,8 @@ router.post("/custom_add", async (req,res)=>{
                 click_count: totalUserClicks,
                 click_data: [0, 10, 5, 2, 20, 30, 45],
                 last7Days: last7Days(),
-                avatar: req.session.avatar
+                avatar: req.session.avatar,
+                characters_shortened: charactersShortened
             },
             partials: {
                 body: "partials/dashboard",
