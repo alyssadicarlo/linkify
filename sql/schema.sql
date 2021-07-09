@@ -4,6 +4,8 @@ CREATE TABLE users(
     last_name text,
     email varchar(200),
     password varchar(2000),
+    characters_shortened int default 0,
+    avatar int default 1,
     UNIQUE(email)
 );
 
