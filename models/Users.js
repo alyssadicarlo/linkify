@@ -4,12 +4,13 @@ const db = require('./conn');
 const bcrypt = require('bcryptjs');
 
 class UsersModel {
-    constructor(id, first_name, last_name, email, password) {
+    constructor(id, first_name, last_name, email, password, avatar) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
+        this.avatar = avatar;
     }
 
     checkPassword(hashedPassword) {
@@ -39,8 +40,8 @@ class UsersModel {
             const response = await db.one(query);
             const isValid = this.checkPassword(response.password)
             if (!!isValid) {
-                const {id, first_name, last_name, email} = response;
-                return { isValid, user_id: id, first_name, last_name, email}
+                const {id, first_name, last_name, email, avatar} = response;
+                return { isValid, user_id: id, first_name, last_name, email, avatar}
             } else {
                 return {isValid}
             }
@@ -86,6 +87,21 @@ class UsersModel {
             const response = await db.result(`
                 UPDATE users
                 SET password = '${hash}'
+                WHERE id = ${user_id};`
+            )
+        return response;
+
+        } catch(error) {
+            console.error("ERROR: ", error);
+            return error;
+        }
+    }
+
+    static async editAvatar(user_id, avatar) {
+        try {
+            const response = await db.result(`
+                UPDATE users
+                SET avatar = ${avatar}
                 WHERE id = ${user_id};`
             )
         return response;

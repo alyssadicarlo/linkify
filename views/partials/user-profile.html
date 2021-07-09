@@ -3,7 +3,7 @@ ${!!is_logged_in ? `
 <div class="row">
   <div class="col-6 pt-3 text-center">
       <div class="mb-2">
-        <img src="/images/avatars/avatar1.png" alt="user avatar"/> 
+        <img src="/images/avatars/avatar${sessionData.avatar}.png" alt="user avatar"/> 
       </div>
       <button id="avatarButton" class="btn btn-outline-primary btn-small" data-bs-toggle="modal" data-bs-target="#editAvatar">
       Edit avatar</button>
@@ -36,7 +36,7 @@ ${!!is_logged_in ? `
   <div class="col-8">
     <a href="/links/dashboard" class="btn btn-outline-dark" role="button">Back to Dashboard</a>
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUser">
-      Delete
+      Delete User
     </button>
   </div>
   <div class="col-3">
@@ -55,11 +55,11 @@ ${!!is_logged_in ? `
             <form action="/users/edit" method="POST">
                 <div class="mb-3">
                     <label for="first_name" class="form-label">First Name</label>
-                    <input name="first_name" type="text" class="form-control" id="first_name" value="${sessionData.first_name}">
+                    <input name="first_name" type="text" class="form-control" id="first_name" value="${sessionData.first_name}" required>
                 </div>
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Last Name</label>
-                    <input name="last_name" type="text" class="form-control" id="last_name" value="${sessionData.last_name}">
+                    <input name="last_name" type="text" class="form-control" id="last_name" value="${sessionData.last_name}" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -82,7 +82,7 @@ ${!!is_logged_in ? `
             <form action="/users/edit" method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">First Name</label>
-                    <input name="email" type="email" class="form-control" id="email" value="${sessionData.email}">
+                    <input name="email" type="email" class="form-control" id="email" value="${sessionData.email}" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -105,11 +105,11 @@ ${!!is_logged_in ? `
             <form action="/users/edit" method="POST">
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input name="password" type="password" class="form-control" id="password">
+                    <input name="password" type="password" class="form-control" id="password" required>
                   </div>
                   <div class="mb-3">
                     <label for="password_confirm" class="form-label">Confirm Password</label>
-                    <input name="password_confirm" type="password" class="form-control" id="password_confirm">
+                    <input name="password_confirm" type="password" class="form-control" id="password_confirm" required>
                   </div>
             </div>
             <div class="modal-footer">
@@ -146,27 +146,42 @@ ${!!is_logged_in ? `
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="users/editAvatar" method="POST">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar1.png');">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar2.png');">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar3.png');">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar4.png');">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar5.png');">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar6.png');">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar7.png');">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar8.png');">
-            <input type="button" class="avatarButton" style="background-image: url('/images/avatars/avatar9.png');">
-         
-          </form>
-           
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-outline-primary">Save changes</button>
-        </div>
+          <form action="/users/editAvatar" method="POST">
+    
+            <div class="avatar-selector">
+                <input id="avatar1" type="radio" name="avatar" value="1" />
+                <label class="avatarClass avatar1" for="avatar1"></label>
+                <input id="avatar2" type="radio" name="avatar" value="2" />
+                <label class="avatarClass avatar2"for="avatar2"></label>
+                <input id="avatar3" type="radio" name="avatar" value="3" />
+                <label class="avatarClass avatar3" for="avatar3"></label>
+                <input id="avatar4" type="radio" name="avatar" value="4" />
+                <label class="avatarClass avatar4"for="avatar4"></label>
+                <input id="avatar5" type="radio" name="avatar" value="5" />
+                <label class="avatarClass avatar5" for="avatar5"></label>
+                <input id="avatar6" type="radio" name="avatar" value="6" />
+                <label class="avatarClass avatar6"for="avatar6"></label>
+                <input id="avatar7" type="radio" name="avatar" value="7" />
+                <label class="avatarClass avatar7" for="avatar7"></label>
+                <input id="avatar8" type="radio" name="avatar" value="8" />
+                <label class="avatarClass avatar8"for="avatar8"></label>
+                <input id="avatar9" type="radio" name="avatar" value="9" />
+                <label class="avatarClass avatar9" for="avatar9"></label>
+            </div>
+       
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-outline-primary">Save changes</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>`
   : 
   `<h1>Please <a href="/users/login">login</a> to view this page!</h1>`
 }
+
+<script>
+  const button = document.querySelector('.avatarButton');
+  button.addEventListener('click')
+</script>
