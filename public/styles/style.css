@@ -10,6 +10,14 @@ canvas {
 
 @media screen and (max-width: 991px) {
     
+    #mobileDash {
+        display: block !important;
+    }
+
+    #desktopDash {
+        display: none !important;
+    }
+
     #mobileNav {
         display: block !important;
     }
