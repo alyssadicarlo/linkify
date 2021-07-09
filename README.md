@@ -5,6 +5,8 @@ A full stack web application to shorten urls inspired by bitly.com
 Users can generate random-character urls from the homepage or login to create, update, and delete their own custom shortened urls.
 
 ## What We Used
+
+Built with Node.js
 ### Languages:
 - HTML
 - CSS
@@ -16,9 +18,9 @@ Users can generate random-character urls from the homepage or login to create, u
 - express-session
 - bcrypt
 - dotenv
-- pg-promise
-- nanoid
 - moment
+- nanoid
+- pg-promise
  
 <!-- ## Screenshots
 ![TITLE](url) -->
@@ -26,7 +28,9 @@ Users can generate random-character urls from the homepage or login to create, u
 ## Features
 * Users can quickly create short urls without logging in and copy to clipboard
 * Logged-in users have access to their dashboard, where they can:
-    * View stats on total clicks for all links and total characters shortened
+    * View stats
+        * Total clicks for all links in each of the last seven days
+        * Total characters shortened
     * View all their existing links
         * Searchable by target url
         * Sortable by title, date added, and click count
@@ -38,13 +42,11 @@ Users can generate random-character urls from the homepage or login to create, u
         * Delete existing links
     * Manage their user profile
         * Edit name, email, and password
+        * Choose a custom avatar
         * Delete their account from the database
 
 ## Future Improvements
-* Allow users to create custom avatars
 * Enable light/dark modes
-* Chart when links were created on a graph
-
 ## Group
 
 - <a href="https://github.com/logancooper">Logan Cooper</a>

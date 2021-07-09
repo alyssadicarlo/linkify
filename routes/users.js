@@ -97,7 +97,6 @@ router.post("/edit", async (req, res) => {
 //POST edit user avatar
 router.post("/editAvatar", async (req, res) => {
     req.session.avatar = req.body.avatar
-    console.log(req.session.user_id)
     const response = await UserModel.editAvatar(req.session.user_id, req.body.avatar)
     res.redirect('/users/profile')
 })
