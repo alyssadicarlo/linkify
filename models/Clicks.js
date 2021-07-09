@@ -16,7 +16,7 @@ class ClicksModel {
             INSERT INTO clicks
                 (linkID)
             VALUES
-                ('${link_id}')`;
+                ('${link_id}');`;
             const response = await db.one(query);
             return response;
         } catch (error) {
@@ -33,7 +33,7 @@ class ClicksModel {
             FROM clicks
             INNER JOIN links ON clicks.linkID=links.id
             INNER JOIN users ON links.userID=users.id
-            WHERE users.id=${user_id}`;
+            WHERE users.id=${user_id};`;
             const response = await db.any(query);
             return response;
         } catch (error) {
@@ -45,12 +45,24 @@ class ClicksModel {
     static async getTotalLinkClicks(link_id){
         //SQL SELECT statement to get all of the Clicks associated a provided link_id
         try {
-            //prepared statement to sanitize the data
             const query = `SELECT clicks.id, clicks.linkid, links.uuid, links.custom_link, links.target_url, clicks.date_added 
             FROM clicks
             INNER JOIN links ON clicks.linkID=links.id
-            WHERE links.id=${link_id}`;
+            WHERE links.id=${link_id};`;
             const response = await db.any(query);
+            return response;
+        } catch (error) {
+            console.error('ERROR: ', error);
+            return error;
+        }
+    }
+
+    static async deleteLinkClicks(link_id) {
+        try {
+            const query = `
+            DELETE FROM clicks
+            WHERE linkID=${link_id};`;
+            const response = await db.result(query);
             return response;
         } catch (error) {
             console.error('ERROR: ', error);
