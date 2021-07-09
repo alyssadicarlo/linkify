@@ -14,7 +14,8 @@ router.get("/login", (req, res)=>{
         locals: {
             title: "Log In",
             is_logged_in: req.session.is_logged_in,
-            user_first_name: req.session.first_name
+            user_first_name: req.session.first_name,
+            avatar: req.session.avatar
         },
         partials: {
             body: "partials/login",
@@ -29,7 +30,8 @@ router.get("/signup", (req, res)=>{
         locals: {
             title: "Sign Up",
             is_logged_in: req.session.is_logged_in,
-            user_first_name: req.session.first_name
+            user_first_name: req.session.first_name,
+            avatar: req.session.avatar
         },
         partials: {
             body: "partials/signup"
@@ -50,7 +52,8 @@ router.get("/profile", (req, res) => {
             title: "User Profile",
             is_logged_in: req.session.is_logged_in,
             user_first_name: req.session.first_name,
-            sessionData: req.session
+            sessionData: req.session,
+            avatar: req.session.avatar
         },
         partials: {
             body: "partials/user-profile"
@@ -135,7 +138,8 @@ router.post("/login", async (req,res)=>{
             locals: {
                 title: "Log In",
                 is_logged_in: req.session.is_logged_in,
-                user_first_name: req.session.first_name
+                user_first_name: req.session.first_name,
+                avatar: req.session.avatar
             },
             partials: {
                 body: 'partials/login',
