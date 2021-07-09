@@ -226,9 +226,17 @@ router.post("/add", async (req,res)=>{
     
     //create UUID for link
     const uuid = nanoid(7);
-
+    let url = "";
     //validate link
-    let url = "http://" + target_url;
+    if(target_url.substring(0,4) === "http")
+    {
+        url = target_url;
+    }
+    else
+    {
+        url = "http://" + target_url;
+    }
+    
     let isURLValid = isValidURL(url);
 
     if(isURLValid)
@@ -285,8 +293,16 @@ router.post("/custom_add", async (req,res)=>{
     const uuid = nanoid(7);
 
     //validate link
-    //if first letters of target_url aren't "http"
-    let url = "http://" + target_url;
+    //ensure the first letters of target_url are "http"
+    let url = "";
+    if(target_url.substring(0,4) === "http")
+    {
+        url = target_url;
+    }
+    else
+    {
+        url = "http://" + target_url;
+    }
     let isURLValid = isValidURL(url);
     if(isURLValid)
     {
