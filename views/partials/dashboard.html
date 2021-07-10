@@ -1,5 +1,5 @@
 ${!!is_logged_in ?
-`<nav class="navbar">
+`<nav class="navbar" id="desktopNav">
   <div class="container-fluid d-flex align-items-center">
     <div class="container-fluid d-flex align-items-center">
       <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
@@ -28,8 +28,31 @@ ${!!is_logged_in ?
       </div>
   </div>
 </nav>
+
+<nav class="navbar d-none" id="mobileNav" style="height: 80px">
+  <div class="row d-flex align-items-center justify-content-between">
+    <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
+    <a href="#createNewModal" class="btn btn-outline-primary me-2" role="button">Create Link</a>
+  </div>
+  <div class="row d-flex align-items-center justify-content-start">
+    ${link_data.length > 0 ?
+        `<form id="filterForm" class="d-flex">
+          <input style="width: 200px;" class="form-control" name="search" type="search" placeholder="Search target URL" aria-label="Search">
+          <select name="sort" class="form-control" aria-label="Default select example">
+            <option selected disabled>Sort by</option>
+            <option value="title">Title</option>
+            <option value="date_added" selected>Date Added</option>
+            <option value="click_count">Click Count</option>
+          </select>
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>`
+        :
+        ``
+      }
+  </div>
+</nav>
 ${failure}
-<div class="container mt-3">
+<div class="container m-10">
   <div class="row justify-content-between">
     <div class="col-3">
       <div class="d-flex align-items-center">
@@ -175,7 +198,7 @@ ${failure}
   ${link_data.map(link => 
     `<div class="card">
         <div class="card-body">
-            <div class="row mb-2">
+            <div class="row mb-5">
             <div class="col-4">
                 <strong>Title</strong>
             </div>
@@ -187,15 +210,15 @@ ${failure}
               }
             </div>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-5">
                 <div class="col-4">
                     <strong>Target URL</strong>
                 </div>
-                <div class="col-8">
+                <div class="col-8 text-break text-wrap">
                     ${link.target_url}
                 </div>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-5">
                 <div class="col-4">
                     <strong>Linkify Link</strong>
                 </div>
@@ -203,7 +226,7 @@ ${failure}
                   <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
                 </div>
             </div>
-            <div class="row mb-2 d-flex align-items-center">
+            <div class="row mb-5 d-flex align-items-center">
                 <div class="col-4">
                     <strong>Custom Link</strong>
                 </div>
@@ -216,7 +239,7 @@ ${failure}
                     <button class="btn btn-outline-primary btn-sm copyButton" id="${link.id}">Copy</button>
                 </div>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-5">
                 <div class="col-4">
                     <strong>Date Added</strong>
                 </div>
@@ -224,7 +247,7 @@ ${failure}
                     ${link.date_added}
                 </div>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-10">
                 <div class="col-4">
                     <strong>Click Count</strong>
                 </div>
