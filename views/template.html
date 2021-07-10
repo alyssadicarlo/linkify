@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="icon" href="/images/favicon.ico"/>
   </head>
-<<body data-set-preferred-mode-onload="true">
+<body data-set-preferred-mode-onload="true">
   ${modals}
     <div class="page-wrapper with-navbar">
     <nav class="navbar justify-content-between">
@@ -17,7 +17,7 @@
             <a class="navbar-brand" href="/"><img src="/images/linkify1.png" style="height: 40px;"></a>
         </div>
 
-        <div class="navbar-content ml-auto"> <!-- d-md-none = display: none on medium screens and up (width > 768px), ml-auto = margin-left: auto -->
+        <div class="navbar-content ml-auto"> 
             ${!!is_logged_in ? 
               `<div class="dropdown with-arrow">
                   <a type="button" class="rounded-circle" data-toggle="dropdown" id="navbar-dropdown-toogle-btn-1" data-bs-display="static" aria-expanded="false">
@@ -42,13 +42,13 @@
         <div class="posthead" style="min-height: 50px;"></div>
       </div>
       <nav class="navbar navbar-fixed-bottom">
-        <button class="btn" type="button" onclick="toggleDemo()">Toggle Darkmode</button>
+        <button class="btn btn-sm" type="button" onclick="toggleDarkMode()">Toggle Darkmode</button>
       </nav>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
     <script type="text/javascript">
       // Dark mode toggle demo
-      function toggleDemo() {
+      function toggleDarkMode() {
         halfmoon.toggleDarkMode();
       }
     </script>
