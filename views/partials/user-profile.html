@@ -1,10 +1,10 @@
 
 ${!!is_logged_in ? `
-<div class="container">
+<div class="container" id="desktopProfile">
   <h1>User Profile</h1>
     <div class="row">
       <div class="col-6 pt-3 text-center">
-          <div class="mb-2">
+          <div class="m-10">
             <img src="/images/avatars/avatar${sessionData.avatar}.png" alt="user avatar"/> 
           </div>
           <a href="#editAvatar" class="btn btn-primary btn-small" role="button">Edit Avatar</a>
@@ -12,30 +12,66 @@ ${!!is_logged_in ? `
       </div>
         <div class="col-6">
           <div class="mb-2">
-            <h4>Name: ${sessionData.first_name} ${sessionData.last_name}</h4>
+            <p class="h4">Name: ${sessionData.first_name} ${sessionData.last_name}</p>
             <a href="#nameModal" class="btn btn-primary" role="button">Edit Name</a>
         </div>
         
         <div class="mb-2">  
-            <h4>Email: ${sessionData.email}</h4>
+            <p class="h4">Email: ${sessionData.email}</p>
             <a href="#emailModal" class="btn btn-primary" role="button">Edit Email</a>
 
         </div>
         
         <div class="mb-3">
-            <h4>Password: (hidden)</h4>
+            <p class="h4">Password: (hidden)</p>
             <a href="#passwordModal" class="btn btn-primary" role="button">Edit Password</a>
         </div>
       </div>
     </div>
     <hr>
-    <div class="row">
+    <div class="row pt-10">
       <div class="col-8">
         <a href="/links/dashboard" class="btn btn-outline-dark" role="button">Back to Dashboard</a>
         <a href="#deleteUser" class="btn btn-danger" role="button">Delete User</a>
       </div>
       <div class="col-3">
       </div>
+  </div>
+</div>
+
+<div class="container d-none text-center" id="mobileProfile">
+  <h3>User Profile</h3>
+    <div class="row justify-content-center pb-10">
+      <img src="/images/avatars/avatar${sessionData.avatar}.png" alt="user avatar" style="max-height: 150px;"/> 
+    </div>
+    <div class="row justify-content-center">
+      <a href="#editAvatar" class="btn btn-primary btn-sm" role="button">Edit Avatar</a>
+    </div>
+    <div class="row justify-content-center">
+
+      <div class="col-6">
+        <div class="mb-5">
+          <p class="h4">Name: ${sessionData.first_name} ${sessionData.last_name}</p>
+          <a href="#nameModal" class="btn btn-sm btn-primary" role="button">Edit Name</a>
+      </div>
+      
+      <div class="mb-5">  
+          <p class="h4">Email: ${sessionData.email}</p>
+          <a href="#emailModal" class="btn btn-sm btn-primary" role="button">Edit Email</a>
+
+      </div>
+      
+      <div class="mb-5">
+          <p class="h4">Password: (hidden)</p>
+          <a href="#passwordModal" class="btn btn-sm btn-primary" role="button">Edit Password</a>
+      </div>
+    </div>
+    </div> 
+    <hr>
+    <div class="row justify-content-center">
+        <a href="/links/dashboard" class="btn btn-sm btn-outline-dark" role="button">Back to Dashboard</a>
+        <a href="#deleteUser" class="btn btn-sm btn-danger" role="button">Delete User</a>
+
   </div>
 </div>
 `
