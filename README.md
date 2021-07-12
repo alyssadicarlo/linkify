@@ -26,9 +26,12 @@ Built with Node.js
 - moment
 - nanoid
 - pg-promise
+- graphjs (front-end only)
  
-<!-- ## Screenshots
-![TITLE](url) -->
+## Screenshots
+![Desktop](./public/images/screenshots/desktop-screenshots.gif)
+![Mobile](./public/images/screenshots/mobile-screenshots.gif)
+
 
 ## Features
 * Users can quickly create short urls without logging in and copy to clipboard
