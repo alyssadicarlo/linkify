@@ -51,8 +51,9 @@ Built with Node.js
         * Delete their account from the database
 * Users can choose to view dark or light modes
 
-<!-- ## Future Improvements -->
-
+## Future Improvements
+- Add password recovery for users having trouble logging in
+- Allow users to choose avatars on signup
 ## Group
 
 <a href="https://github.com/logancooper">Logan Cooper</a>
