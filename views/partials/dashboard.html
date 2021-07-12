@@ -1,5 +1,5 @@
 ${!!is_logged_in ?
-`<nav class="navbar" id="desktopNav">
+`<nav class="navbar" id="desktopNav" style="border-bottom: 1px solid transparent;">
   <div class="container-fluid d-flex align-items-center">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
@@ -32,7 +32,7 @@ ${!!is_logged_in ?
   </div>
 </nav>
 
-<nav class="navbar d-none" id="mobileNav" style="height: 80px">
+<nav class="navbar d-none" id="mobileNav" style="height: 80px; border-bottom: 1px solid transparent;">
   <div class="row d-flex align-items-center justify-content-between">
     <a href="#" class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</a>
     <a href="#createNewModal" class="btn btn-outline-primary me-2" role="button">Create Link</a>
