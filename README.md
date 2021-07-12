@@ -1,5 +1,7 @@
 # Linkify
-A full stack web application to shorten urls inspired by bitly.com
+A full stack web application to shorten urls inspired by bitly.com 
+
+Active development: July 6-12, 2021
 
 ## Overview
 Users can generate random-character urls from the homepage or login to create, update, and delete their own custom shortened urls.
@@ -11,6 +13,9 @@ Built with Node.js
 - HTML
 - CSS
 - Javascript
+
+### Frameworks
+- [Halfmoon](http://gethalfmoon.com)
 
 ### Node Module Dependencies:
 - express
@@ -44,13 +49,17 @@ Built with Node.js
         * Edit name, email, and password
         * Choose a custom avatar
         * Delete their account from the database
+* Users can choose to view dark or light modes
 
-## Future Improvements
-* Enable light/dark modes
+<!-- ## Future Improvements -->
+
 ## Group
 
-- <a href="https://github.com/logancooper">Logan Cooper</a>
+<a href="https://github.com/logancooper">Logan Cooper</a>
+    - Primarily responsible for database setup and routes.
 
-- <a href="https://github.com/alyssadicarlo">Alyssa DiCarlo</a>
+<a href="https://github.com/alyssadicarlo">Alyssa DiCarlo</a>
+    - Primarily responsible for front-end/views.
 
-- <a href="https://github.com/natelee3">Nate Lee</a>
+<a href="https://github.com/natelee3">Nate Lee</a>
+    - Primarily responsible for data models, user-profile view, and darkmode implementation.
