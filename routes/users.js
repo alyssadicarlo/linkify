@@ -4,6 +4,7 @@ const express = require("express");
 const UserModel = require("../models/Users");
 const bcrypt = require("bcryptjs");
 const LinksModel = require("../models/Links");
+const ClicksModel = require("../models/Clicks");
 
 //create a router
 const router = express.Router();
@@ -52,7 +53,7 @@ router.get("/logout", (req,res) => {
 router.get("/profile", (req, res) => {
     res.render("template", {
         locals: {
-            title: "User Profile",
+            title: `Linkify | ${req.session.first_name}'s Profile`,
             is_logged_in: req.session.is_logged_in,
             user_first_name: req.session.first_name,
             sessionData: req.session,
@@ -108,7 +109,17 @@ router.post("/editAvatar", async (req, res) => {
 //POST delete user
 router.post("/delete", async (req, res) => {
     const user_id = req.session.user_id;
+    //Get all links for the user
+    const userLinks = await LinksModel.getBy(user_id, "date_added");
+    console.log(userLinks[0].id);
+    //foreach link in the returned links, delete all clicks related to that link
+    for(let i = 0; i < userLinks.length; i++)
+    {
+        const deleteClicks = await ClicksModel.deleteLinkClicks(userLinks[i].id);
+    }
+    //delete all of the links
     const deleteLinks = await LinksModel.deleteUserLinks(user_id);
+    //delete the user
     const deleteUser = await UserModel.deleteUser(user_id);
     req.session.destroy();
     res.redirect('/');

@@ -9,7 +9,7 @@ const password = process.env.DB_PASSWORD;
 
 const pgp = require('pg-promise')({
     query: function(event) {
-        console.log("QUERY: ", event.query);
+        //console.log("QUERY: ", event.query);
     }
 });
 

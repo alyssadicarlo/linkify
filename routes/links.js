@@ -13,7 +13,7 @@ const router = express.Router();
 
 function last7Days() {
     let daysAgo = []
-    for(var i=7; i>0; i--) {
+    for(var i=6; i>=0; i--) {
         daysAgo.push(moment().subtract(i, 'days').format("MM DD"));
     }
     return daysAgo
@@ -228,9 +228,17 @@ router.post("/add", async (req,res)=>{
     
     //create UUID for link
     const uuid = nanoid(7);
-
+    let url = "";
     //validate link
-    let url = "http://" + target_url;
+    if(target_url.substring(0,4) === "http")
+    {
+        url = target_url;
+    }
+    else
+    {
+        url = "http://" + target_url;
+    }
+    
     let isURLValid = isValidURL(url);
 
     if(isURLValid)
@@ -240,12 +248,15 @@ router.post("/add", async (req,res)=>{
             
         if(response.rowCount === 1)
         {
-            console.log("added a row!");
-            console.log("Here is your link: " + "www.linkify.com/" + uuid);
             const shortened_link = "127.0.0.1:3000/" + uuid;
+            let totalCharsShortened = Math.abs(target_url.length - shortened_link.length);
+            //update the total characters shortened column for the user
+            const charShortenedResponse = await UsersModel.addToCharShortened(userID, totalCharsShortened);
+
+            
             res.render("template", {
                 locals: {
-                    title: "Home",
+                    title: "Linkify",
                     is_logged_in: req.session.is_logged_in,
                     user_first_name: req.session.first_name,
                     shortened_link: shortened_link,
@@ -285,11 +296,33 @@ router.post("/custom_add", async (req,res)=>{
     const uuid = nanoid(7);
 
     //validate link
-    //if first letters of target_url aren't "http"
-    let url = "http://" + target_url;
+    //ensure the first letters of target_url are "http"
+    let url = "";
+    if(target_url.substring(0,4) === "http")
+    {
+        url = target_url;
+    }
+    else
+    {
+        url = "http://" + target_url;
+    }
     let isURLValid = isValidURL(url);
     if(isURLValid)
     {
+        let totalCharsShortened = -1;
+        if(custom_link.length < uuid.length)
+        {
+            const customLinkFull = "127.0.0.1:3000/" + custom_link;
+            totalCharsShortened = Math.abs(target_url.length - customLinkFull.length);
+        }
+        else
+        {
+            const uuidLink = "127.0.0.1:3000/" + uuid;
+            totalCharsShortened = Math.abs(target_url.length - uuidLink.length);
+        }
+        //update the total characters shortened column for the user
+        const charShortenedResponse = await UsersModel.addToCharShortened(userID, totalCharsShortened);
+
         //Escape any ' that appear in the title
         const titleString = title[0] + title.slice(1).replace(/'/g, "''");
         //Run addLink function of link model
@@ -303,14 +336,15 @@ router.post("/custom_add", async (req,res)=>{
             const totalUserClicks = userClicksResponse.length;
             res.render("template", {
                 locals: {
-                    title: "Dashboard",
+                    title: "Linkify | Dashboard",
                     is_logged_in: req.session.is_logged_in,
                     user_first_name: req.session.first_name,
                     link_data: linkData,
                     click_count: totalUserClicks,
                     click_data: clicksPerDay,
                     last7Days: last7Days(),
-                    avatar: req.session.avatar
+                    avatar: req.session.avatar,
+                    characters_shortened: charactersShortened
                 },
                 partials: {
                     body: "partials/dashboard",
@@ -329,14 +363,15 @@ router.post("/custom_add", async (req,res)=>{
         const totalUserClicks = userClicksResponse.length;
         res.render("template", {
             locals: {
-                title: "Dashboard",
+                title: "Linkify | Dashboard",
                 is_logged_in: req.session.is_logged_in,
                 user_first_name: req.session.first_name,
                 link_data: linkData,
                 click_count: totalUserClicks,
                 click_data: [0, 10, 5, 2, 20, 30, 45],
                 last7Days: last7Days(),
-                avatar: req.session.avatar
+                avatar: req.session.avatar,
+                characters_shortened: charactersShortened
             },
             partials: {
                 body: "partials/dashboard",

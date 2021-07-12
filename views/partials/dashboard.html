@@ -267,6 +267,98 @@ ${failure}
             </div>
         </div>
     </div>
+    <div class="modal fade" id="deleteLink${link.id}" tabindex="-1" aria-labelledby="deleteLinkLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteLinkLabel">Are you sure?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form action="/links/delete" method="POST">
+                <input type="hidden" name="id" value="${link.id}">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Exit</button>
+                <button type="submit" class="btn btn-outline-primary ms-1">Yes</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>`  
+  ).join('')}
+</div>
+<div id="mobileDash" class="d-none mt-5">
+  ${link_data.map(link => 
+    `<div class="card">
+        <div class="card-body">
+            <div class="row mb-2">
+            <div class="col-4">
+                <strong>Title</strong>
+            </div>
+            <div class="col-8">
+              ${link.title === null ?
+                `${link.target_url}`
+                :
+                `${link.title}`
+              }
+            </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <strong>Target URL</strong>
+                </div>
+                <div class="col-8">
+                    ${link.target_url}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <strong>Linkify Link</strong>
+                </div>
+                <div class="col-8">
+                  <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
+                </div>
+            </div>
+            <div class="row mb-2 d-flex align-items-center">
+                <div class="col-4">
+                    <strong>Custom Link</strong>
+                </div>
+                <div class="col-8">
+                  ${link.custom_link === null ?
+                    `<a class="customLink me-2" href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>`
+                    :
+                    `<a class="customLink me-2" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>`
+                    }
+                    <button class="btn btn-outline-primary btn-sm copyButton" id="${link.id}">Copy</button>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <strong>Date Added</strong>
+                </div>
+                <div class="col-8">
+                    ${link.date_added}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <strong>Click Count</strong>
+                </div>
+                <div class="col-8">
+                    ${link.click_count}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
+                      Edit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#deleteLink${link.id}">
+                      Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="updateModal${link.id}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -274,7 +366,7 @@ ${failure}
                 <h5 class="modal-title" id="updateModalLabel">${link.target_url}</h5>
             </div>
             <div class="modal-body">
-                < action="/links/update" method="POST">
+                <form action="/links/update" method="POST">
                     <input type="hidden" name="id" value="${link.id}">
                     <div class="mb-3">
                       <label for="title">Title</label>
