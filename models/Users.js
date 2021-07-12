@@ -19,7 +19,6 @@ class UsersModel {
 
     static async addUser(first_name, last_name, email, password) {
         try {
-            //prepared statement to sanitize the data
             const query = `
             INSERT INTO users
                 (first_name, last_name, email, password)
