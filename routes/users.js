@@ -38,7 +38,8 @@ router.get("/signup", (req, res)=>{
         },
         partials: {
             body: "partials/signup",
-            modals: "partials/blank"
+            modals: "partials/blank",
+            failure: 'partials/blank',
         }
     })
 })
@@ -191,6 +192,19 @@ router.post("/signup", async (req,res)=>{
     }
     else
     {
+        res.render('template', {
+            locals: {
+                title: "Sign Up",
+                is_logged_in: req.session.is_logged_in,
+                user_first_name: req.session.first_name,
+                avatar: req.session.avatar
+            },
+            partials: {
+                body: 'partials/signup',
+                failure: 'partials/signup-failure',
+                modals: "partials/blank"
+            }
+        });
         console.log("Your password and password confirmation fields do not match!");
         return;
     }
