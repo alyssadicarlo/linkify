@@ -11,6 +11,10 @@ const UsersModel = require("../models/Users");
 //create a router 
 const router = express.Router();
 
+//create clicksPerDay array - int array of size 7
+let clicksPerDay = [0,0,0,0,0,0,0];
+let charactersShortened = -1;
+
 function last7Days() {
     let daysAgo = []
     for(var i=6; i>=0; i--) {
@@ -37,7 +41,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     //Get total characters shortened
     const totalCharsResponse = await UsersModel.getTotalCharactersShortened(req.session.user_id);
     
-    let charactersShortened = -1;
+    
     if(totalCharsResponse.rowCount === 1)
     {
         charactersShortened = totalCharsResponse.rows[0].characters_shortened;
@@ -47,8 +51,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     //FIRST ELEMENT IS TOTAL CLICKS FROM 7 DAYS AGO
     //LAST ELEMENT IS TOTACL CLICKS FROM TODAY
 
-    //create clicksPerDay array - int array of size 7
-    let clicksPerDay = [0,0,0,0,0,0,0];
+
 
     //for each day in the past 7 days (ending with today), total up the number of clicks that have a date matching that day
     let lastSevenDays = [];
@@ -340,7 +343,7 @@ router.post("/custom_add", async (req,res)=>{
                     is_logged_in: req.session.is_logged_in,
                     user_first_name: req.session.first_name,
                     link_data: linkData,
-                    click_count: totalUserClicks,
+                    total_user_click_count: totalUserClicks,
                     click_data: clicksPerDay,
                     last7Days: last7Days(),
                     avatar: req.session.avatar,
