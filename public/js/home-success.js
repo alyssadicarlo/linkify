@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     copyButton.addEventListener('click', () => {
         const copyText = target_url.value;
         copyToClipboard(copyText);
-        copyButton.classList = "btn btn-outline-success";
+        copyButton.classList = "btn btn-success";
         copyButton.innerHTML = "Copied";
     });
 
