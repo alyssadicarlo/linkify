@@ -136,7 +136,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
             },
             partials: {
                 body: "partials/dashboard",
-                failure: 'partials/blank'
+                failure: 'partials/blank',
+                modals: "partials/blank"
             }
         })
     }
@@ -201,7 +202,8 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
             },
             partials: {
                 body: "partials/dashboard",
-                failure: 'partials/blank'
+                failure: 'partials/blank',
+                modals: "partials/blank"
             }
         })
     }
@@ -262,7 +264,8 @@ router.post("/add", async (req,res)=>{
                     avatar: req.session.avatar
                 },
                 partials: {
-                    body: "partials/home-success"
+                    body: "partials/home-success",
+                    modals: "partials/blank"
                 }
             })
         }
@@ -345,7 +348,8 @@ router.post("/custom_add", async (req,res)=>{
                 },
                 partials: {
                     body: "partials/dashboard",
-                    failure: 'partials/dashboard-failure'
+                    failure: 'partials/dashboard-failure',
+                    modals: "partials/blank"
                 }
             });
         }
@@ -371,7 +375,8 @@ router.post("/custom_add", async (req,res)=>{
             },
             partials: {
                 body: "partials/dashboard",
-                failure: 'partials/dashboard-notvalid'
+                failure: 'partials/dashboard-notvalid',
+                modals: "partials/blank"
             }
         });
     }

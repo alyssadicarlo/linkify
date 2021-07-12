@@ -36,7 +36,8 @@ router.get('/:redirect?', async (req, res) => {
                 avatar: req.session.avatar
             },
             partials: {
-                body: 'partials/home'
+                body: 'partials/home',
+                modals: 'partials/blank'
             }
         })
     }

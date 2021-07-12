@@ -20,7 +20,9 @@ router.get("/login", (req, res)=>{
         },
         partials: {
             body: "partials/login",
-            failure: 'partials/blank'
+            failure: 'partials/blank',
+            modals: "partials/blank"
+
         }
     })
 })
@@ -35,7 +37,8 @@ router.get("/signup", (req, res)=>{
             avatar: req.session.avatar
         },
         partials: {
-            body: "partials/signup"
+            body: "partials/signup",
+            modals: "partials/blank"
         }
     })
 })
@@ -57,7 +60,8 @@ router.get("/profile", (req, res) => {
             avatar: req.session.avatar
         },
         partials: {
-            body: "partials/user-profile"
+            body: "partials/user-profile",
+            modals: "partials/user-profile-modals"
         }
     })
 })
@@ -153,7 +157,8 @@ router.post("/login", async (req,res)=>{
             },
             partials: {
                 body: 'partials/login',
-                failure: 'partials/login-failure'
+                failure: 'partials/login-failure',
+                modals: "partials/blank"
             }
         });
     }

@@ -1,48 +1,65 @@
 ${!!is_logged_in ?
-`<nav class="navbar navbar-expand-lg navbar-light" style="background-color:white;">
-  <div class="container-fluid">
+`<nav class="navbar" id="desktopNav">
+  <div class="container-fluid d-flex align-items-center">
+    <div class="container-fluid d-flex align-items-center">
       <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
-      <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filter" aria-controls="filter" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
-      <!-- <div class="collapse navbar-collapse" id="filter"> -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#createNewModal">
-              Create Link
-            </button>
-          </li>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
+        <li class="nav-item" style="height:auto">
+          <a href="#createNewModal" class="btn btn-outline-primary me-2" role="button">Create Link</a>
+        </li>
+      </ul>
+      <div class="d-flex full-width align-items-center">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 full-width">
+          ${link_data.length > 0 ?
+            `<form id="filterForm" class="d-flex">
+              <input style="width: 200px;" class="form-control" name="search" type="search" placeholder="Search target URL" aria-label="Search">
+              <select name="sort" class="form-control" aria-label="Default select example">
+                <option selected disabled>Sort by</option>
+                <option value="title">Title</option>
+                <option value="date_added" selected>Date Added</option>
+                <option value="click_count">Click Count</option>
+              </select>
+              <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>`
+            :
+            ``
+          }
         </ul>
-        <div class="d-flex full-width">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 full-width">
-            ${link_data.length > 0 ?
-              `<form id="filterForm" class="d-flex">
-                <input style="width: 200px;" class="form-control" name="search" type="search" placeholder="Search target URL" aria-label="Search">
-                <select name="sort" class="form-select" aria-label="Default select example">
-                  <option selected disabled>Sort by</option>
-                  <option value="title">Title</option>
-                  <option value="date_added" selected>Date Added</option>
-                  <option value="click_count">Click Count</option>
-                </select>
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-              </form>`
-              :
-              ``
-            }
-          </ul>
-        </div>
-      <!-- </div> -->
+      </div>
+  </div>
+</nav>
+
+<nav class="navbar d-none" id="mobileNav" style="height: 80px">
+  <div class="row d-flex align-items-center justify-content-between">
+    <span class="navbar-brand mb-0 h1">${user_first_name}'s Dashboard</span>
+    <a href="#createNewModal" class="btn btn-outline-primary me-2" role="button">Create Link</a>
+  </div>
+  <div class="row d-flex align-items-center justify-content-start">
+    ${link_data.length > 0 ?
+        `<form id="filterForm" class="d-flex">
+          <input style="width: 200px;" class="form-control" name="search" type="search" placeholder="Search target URL" aria-label="Search">
+          <select name="sort" class="form-control" aria-label="Default select example">
+            <option selected disabled>Sort by</option>
+            <option value="title">Title</option>
+            <option value="date_added" selected>Date Added</option>
+            <option value="click_count">Click Count</option>
+          </select>
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>`
+        :
+        ``
+      }
   </div>
 </nav>
 ${failure}
-<div class="container mt-3">
+<div class="container m-auto justify-content-center">
   <div class="row justify-content-between">
-    <div class="col-3">
+    <div class="col-2 ml-10">
       <div class="d-flex align-items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
           <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
         </svg>
-        <div class="p-2">
+        <div class="p-5">
           <h2 class="m-0">${total_user_click_count}</h2>
           <p class="m-0" style="color: gray; font-size: 12px;">Total Clicks</p>
         </div>
@@ -52,40 +69,43 @@ ${failure}
           <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
           <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
         </svg>
-        <div class="p-2">
+        <div class="p-5">
           <h2 class="m-0">${characters_shortened}</h2>
           <p class="m-0" style="color: gray; font-size: 12px;">Characters Shortened</p>
         </div>
       </div>
     </div>
-    <div class="col-9">
+    <div class="col-8 mr-10">
       <canvas id="myChart" width=400 height="400"></canvas>
     </div>
   </div>
 </div>
+
 <div id="desktopDash">
   ${link_data.length > 0 ?
-    `<div class="container mt-5">
-      <div class="row justify-content-between">
-        <div class="col-2">
-          <p><strong>Title</strong></p>
-        </div>
-        <div class="col-2">
-          <p><strong>Target URL</strong></p>
-        </div>
-        <div class="col-2">
-          <p><strong>Linkify Link</strong></p>
-        </div>
-        <div class="col-2">
-          <p><strong>Custom Link</strong></p>
-        </div>
-        <div class="col-2">
-          <p><strong>Date Added</strong></p>
-        </div>
-        <div class="col-2">
-          <p><strong>Click Count</strong></p>
+    `<div class="card mb-5" style="padding-bottom: 0; padding-top: 0; border: 0;">
+      <div class="card-body">
+        <div class="row justify-content-between">
+          <div class="col-sm px-5">
+            <p><strong>Title</strong></p>
+          </div>
+          <div class="col-sm px-5">
+            <p><strong>Target URL</strong></p>
+          </div>
+          <div class="col-sm px-5">
+            <p><strong>Linkify Link</strong></p>
+          </div>
+          <div class="col-sm px-5">
+            <p><strong>Custom Link</strong></p>
+          </div>
+          <div class="col-sm px-5">
+            <p><strong>Date Added</strong></p>
+          </div>
+          <div class="col-sm px-5">
+            <p><strong>Click Count</strong></p>
         </div>
       </div>
+    </div>
     </div>`
     :
     `<div class="d-flex justify-content-center mt-5">
@@ -93,44 +113,40 @@ ${failure}
     </div>`
     }
   ${link_data.map(link => 
-    `<div class="card mb-1">
+    `<div class="card mb-5">
       <div class="card-body">
         <div class="row justify-content-between">
-          <div class="col-2">
+          <div class="col-2 text-wrap text-break px-5">
             ${link.title === null ?
             `${link.target_url}`
             :
             `${link.title}`
             }
           </div>
-          <div class="col-2">
+          <div class="col-2 text-wrap text-break px-5">
             ${link.target_url}
           </div>
-          <div class="col-2">
+          <div class="col-2 text-wrap text-break px-5">
             <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
           </div>
-          <div class="col-2">
+          <div class="col-2 text-wrap text-break px-5">
             ${link.custom_link === null ?
             `<a class="customLink" href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>`
             :
             `<a class="customLink" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>`
             }
-            <button class="btn btn-outline-primary btn-sm mt-2 copyButton" id="${link.id}">Copy</button>
+            <button class="btn btn-outline-primary btn-sm mt-5 copyButton" id="${link.id}">Copy</button>
           </div>
-          <div class="col-2">
+          <div class="col-2 text-wrap text-break px-5">
             ${link.date_added}
           </div>
-          <div class="col-2">
+          <div class="col-2 text-wrap text-break px-5">
             <p>${link.click_count}</p>
           </div>
         </div>
         <div class="d-flex align-items-center">
-          <button type="button" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
-            Edit
-          </button>
-          <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#deleteLink${link.id}">
-            Delete
-          </button>
+          <a href="#updateModal${link.id}" class="btn btn-small" role="button">Edit</a>
+          <a href="#deleteLink${link.id}" class="btn btn-danger btn-small" role="button">Delete</a>
         </div>
       </div>
     </div>
@@ -138,27 +154,118 @@ ${failure}
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="updateModalLabel">${link.target_url}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title text-break" id="updateModalLabel">${link.target_url}</h5>
           </div>
           <div class="modal-body">
             <form action="/links/update" method="POST">
               <input type="hidden" name="id" value="${link.id}">
-              <div class="mb-3">
+              <div class="mb-10">
                 <label for="title">Title</label>
-                <input name="title" id="title" type="text" class="form-control mb-1" value="${link.title === null ? `${link.target_url}` : `${link.title}`}">
+                <input name="title" id="title" type="text" class="form-control mb-5" value="${link.title === null ? `${link.target_url}` : `${link.title}`}">
               </div>
-              <div class="mb-3">
-                <label class="d-flex align-items-center mb-3"> https://linkify.com/
-                  <input name="custom_url" type="text" class="form-control ms-1" value="${link.custom_link === null ? `${link.uuid}` : `${link.custom_link}`}">
+              <div class="mb-10">
+                <label class="d-flex align-items-center mb-10"> https://linkify.com/
+                  <input name="custom_url" type="text" class="form-control ml-5" value="${link.custom_link === null ? `${link.uuid}` : `${link.custom_link}`}">
                 </label>
               </div>
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-outline-primary ms-1">Update</button>
+              <a href="#" class="btn btn-outline-primary" role="button" aria-label="Close">Close</a>
+              <button type="submit" class="btn btn-primary ml-5">Update</button>
             </form>
           </div>
         </div>
       </div>
+    </div>
+    <div class="modal fade" id="deleteLink${link.id}" tabindex="-1" aria-labelledby="deleteLinkLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteLinkLabel">Are you sure?</h5>
+          </div>
+          <div class="modal-body">
+              <form action="/links/delete" method="POST">
+                <input type="hidden" name="id" value="${link.id}">
+                <a href="#" class="btn btn-outline-primary" role="button" aria-label="Close">Close</a>
+                <button type="submit" class="btn btn-primary ml-5">Yes</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>`  
+  ).join('')}
+</div>
+
+<div id="mobileDash" class="d-none mt-5">
+  ${link_data.map(link => 
+    `<div class="card">
+        <div class="card-body">
+            <div class="row mb-5">
+            <div class="col-4">
+                <strong>Title</strong>
+            </div>
+            <div class="col-8">
+              ${link.title === null ?
+                `${link.target_url}`
+                :
+                `${link.title}`
+              }
+            </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-4">
+                    <strong>Target URL</strong>
+                </div>
+                <div class="col-8 text-break text-wrap">
+                    ${link.target_url}
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-4">
+                    <strong>Linkify Link</strong>
+                </div>
+                <div class="col-8">
+                  <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
+                </div>
+            </div>
+            <div class="row mb-5 d-flex align-items-center">
+                <div class="col-4">
+                    <strong>Custom Link</strong>
+                </div>
+                <div class="col-8">
+                  ${link.custom_link === null ?
+                    `<a class="customLink me-2" href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>`
+                    :
+                    `<a class="customLink me-2" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>`
+                    }
+                    <button class="btn btn-outline-primary btn-sm copyButton" id="${link.id}">Copy</button>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-4">
+                    <strong>Date Added</strong>
+                </div>
+                <div class="col-8">
+                    ${link.date_added}
+                </div>
+            </div>
+            <div class="row mb-10">
+                <div class="col-4">
+                    <strong>Click Count</strong>
+                </div>
+                <div class="col-8">
+                    ${link.click_count}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#updateModal${link.id}">
+                      Edit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#deleteLink${link.id}">
+                      Delete
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal fade" id="deleteLink${link.id}" tabindex="-1" aria-labelledby="deleteLinkLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -257,10 +364,9 @@ ${failure}
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="updateModalLabel">${link.target_url}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                < action="/links/update" method="POST">
+                <form action="/links/update" method="POST">
                     <input type="hidden" name="id" value="${link.id}">
                     <div class="mb-3">
                       <label for="title">Title</label>
@@ -271,8 +377,8 @@ ${failure}
                           <input name="custom_url" type="text" class="form-control ms-1" value="${link.custom_link === null ? `${link.uuid}` : `${link.custom_link}`}">
                       </label>
                     </div>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-outline-primary ms-1">Update</button>
+                    <a href="#" class="btn btn-outline-primary" role="button" aria-label="Close">Close</a>
+                    <button type="submit" class="btn btn-primary ms-1">Update</button>
                 </form>
             </div>
         </div>
@@ -283,13 +389,12 @@ ${failure}
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="deleteLinkLabel">Are you sure?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="/links/delete" method="POST">
                     <input type="hidden" name="id" value="${link.id}">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Exit</button>
-                    <button type="submit" class="btn btn-outline-primary ms-1">Yes</button>
+                    <a href="#" class="btn btn-outline-primary" role="button" aria-label="Close">Close</a>
+                    <button type="submit" class="btn btn-primary ms-1">Yes</button>
                     </form>
                 </div>
             </div>
@@ -302,7 +407,6 @@ ${failure}
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="createNewModalLabel">Add New Link</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <form action="/links/custom_add" method="POST">
@@ -319,8 +423,8 @@ ${failure}
                   <input name="custom_link" type="text" class="form-control ms-1" placeholder="your_custom_link">
                 </label>
               </div>
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-outline-primary ms-1">Generate</button>
+              <a href="#" class="btn btn-outline-primary" role="button" aria-label="Close">Close</a>
+              <button type="submit" class="btn btn-primary ms-1">Generate</button>
             </form>
         </div>
       </div>
@@ -359,3 +463,4 @@ ${failure}
   );
 
 </script>
+

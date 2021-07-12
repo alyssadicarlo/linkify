@@ -1,26 +1,28 @@
+<div class="container mx-10">
 <h1>Sign Up</h1>
 <form action="/users/signup" method="POST">
-    <div class="mb-3">
-        <label for="first_name" class="form-label">First Name</label>
-        <input name="first_name" type="text" class="form-control" id="first_name">
+    <div class="mb-10">
+        <label for="first_name" class="form-label required">First Name</label>
+        <input name="first_name" type="text" class="form-control" id="first_name" required>
     </div>
-    <div class="mb-3">
-        <label for="last_name" class="form-label">Last Name</label>
-        <input name="last_name" type="text" class="form-control" id="last_name">
+    <div class="mb-10">
+        <label for="last_name" class="form-label required">Last Name</label>
+        <input name="last_name" type="text" class="form-control" id="last_name" required>
     </div>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email Address</label>
-      <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+    <div class="mb-10">
+      <label for="email" class="form-label required">Email Address</label>
+      <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
       <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input name="password" type="password" class="form-control" id="password">
+    <div class="mb-10">
+      <label for="password" class="form-label required">Password</label>
+      <input name="password" type="password" class="form-control" id="password" required>
     </div>
-    <div class="mb-3">
-      <label for="password_confirm" class="form-label">Confirm Password</label>
-      <input name="password_confirm" type="password" class="form-control" id="password_confirm">
+    <div class="mb-10">
+      <label for="password_confirm" class="form-label required">Confirm Password</label>
+      <input name="password_confirm" type="password" class="form-control" id="password_confirm" required>
     </div>
     <button type="submit" class="btn btn-primary">Sign Up</button>
     <a href="/users/login">Already have an account? Login instead</a>
 </form>
+</div>

@@ -60,6 +60,15 @@ canvas {
         width: 100%;
         margin-left: 0 !important;
         margin-top: 4px;
+    
+    }
+
+    #mobileProfile {
+        display: block !important;
+    }
+
+    #desktopProfile {
+        display: none !important;
     }
 }
 
@@ -112,4 +121,6 @@ canvas {
             filter: none;
 }
 
-
+.page-wrapper > .navbar {
+    display: flex;
+}
