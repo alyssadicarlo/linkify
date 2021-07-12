@@ -371,7 +371,7 @@ router.post("/custom_add", async (req,res)=>{
                 user_first_name: req.session.first_name,
                 link_data: linkData,
                 total_user_click_count: totalUserClicks,
-                click_data: [0, 10, 5, 2, 20, 30, 45],
+                click_data: clicksPerDay,
                 last7Days: last7Days(),
                 avatar: req.session.avatar,
                 characters_shortened: charactersShortened
