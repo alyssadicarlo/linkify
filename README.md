@@ -3,6 +3,8 @@ A full stack web application to shorten urls inspired by bitly.com
 
 Active development: July 6-12, 2021
 
+Live deployment: [www.linkify.link](www.linkify.link)
+
 ## Overview
 Users can generate random-character urls from the homepage or login to create, update, and delete their own custom shortened urls.
 
