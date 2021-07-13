@@ -130,13 +130,13 @@ ${failure}
             ${link.target_url}
           </div>
           <div class="col-2 text-wrap text-break px-5">
-            <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
+            <a href="https://linkify.link/${link.uuid}">linkify.link/${link.uuid}</a>
           </div>
           <div class="col-2 text-wrap text-break px-5">
             ${link.custom_link === null ?
-            `<a class="customLink" href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>`
+            `<a class="customLink" href="https://linkify.link/${link.uuid}">linkify.link/${link.uuid}</a>`
             :
-            `<a class="customLink" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>`
+            `<a class="customLink" href="https://linkify.link/${link.custom_link}">linkify.link/${link.custom_link}</a>`
             }
             <button class="btn btn-outline-primary btn-sm mt-5 copyButton" id="${link.id}">Copy</button>
           </div>
@@ -167,7 +167,7 @@ ${failure}
                 <input name="title" id="title" type="text" class="form-control mb-5" value="${link.title === null ? `${link.target_url}` : `${link.title}`}">
               </div>
               <div class="mb-10">
-                <label class="d-flex align-items-center mb-10"> https://linkify.com/
+                <label class="d-flex align-items-center mb-10"> https://linkify.link/
                   <input name="custom_url" type="text" class="form-control ml-5" value="${link.custom_link === null ? `${link.uuid}` : `${link.custom_link}`}">
                 </label>
               </div>
@@ -226,7 +226,7 @@ ${failure}
                     <strong>Linkify Link</strong>
                 </div>
                 <div class="col-8">
-                  <a href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>
+                  <a href="https://linkify.link/${link.uuid}">linkify.link/${link.uuid}</a>
                 </div>
             </div>
             <div class="row mb-5 d-flex align-items-center">
@@ -235,9 +235,9 @@ ${failure}
                 </div>
                 <div class="col-8">
                   ${link.custom_link === null ?
-                    `<a class="customLink me-2" href="http://127.0.0.1:3000/${link.uuid}">linkify.com/${link.uuid}</a>`
+                    `<a class="customLink me-2" href="https://linkify.link/${link.uuid}">linkify.link/${link.uuid}</a>`
                     :
-                    `<a class="customLink me-2" href="http://127.0.0.1:3000/${link.custom_link}">linkify.com/${link.custom_link}</a>`
+                    `<a class="customLink me-2" href="https://linkify.link/${link.custom_link}">linkify.link/${link.custom_link}</a>`
                     }
                     <button class="btn btn-outline-primary btn-sm copyButton" id="${link.id}">Copy</button>
                 </div>
@@ -283,7 +283,7 @@ ${failure}
                     <input name="title" id="title" type="text" class="form-control mb-1" value="${link.title === null ? `${link.target_url}` : `${link.title}`}">
                   </div>
                   <div class="mb-3">
-                    <label class="d-flex align-items-center mb-3"> https://linkify.com/
+                    <label class="d-flex align-items-center mb-3"> https://linkify.link/
                         <input name="custom_url" type="text" class="form-control ms-1" value="${link.custom_link === null ? `${link.uuid}` : `${link.custom_link}`}">
                     </label>
                   </div>
@@ -332,7 +332,7 @@ ${failure}
                 <input name="target_url" id="target_url" type="text" class="form-control mb-1" placeholder="Enter link to shorten">
               </div>
               <div class="mb-3">
-                <label class="d-flex align-items-center mb-3"> https://linkify.com/
+                <label class="d-flex align-items-center mb-3"> https://linkify.link/
                   <input name="custom_link" type="text" class="form-control ms-1" placeholder="your_custom_link">
                 </label>
               </div>
