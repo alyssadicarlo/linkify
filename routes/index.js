@@ -11,8 +11,6 @@ router.get('/:redirect?', async (req, res) => {
     //if there is a redirect
     if(!!req.params.redirect)
     {
-        //console.log(req.params.redirect);
-
         //Get the ID of the link we are interacting with
         const linkID = await LinkModel.getLinkID(req.params.redirect);
         
