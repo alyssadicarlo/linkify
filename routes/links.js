@@ -247,7 +247,7 @@ router.post("/add", async (req,res)=>{
             
         if(response.rowCount === 1)
         {
-            const shortened_link = "127.0.0.1:3000/" + uuid;
+            const shortened_link = "linkify.link/" + uuid;
             let totalCharsShortened = Math.abs(target_url.length - shortened_link.length);
             //update the total characters shortened column for the user
             const charShortenedResponse = await UsersModel.addToCharShortened(userID, totalCharsShortened);
@@ -312,12 +312,12 @@ router.post("/custom_add", async (req,res)=>{
         let totalCharsShortened = -1;
         if(custom_link.length < uuid.length)
         {
-            const customLinkFull = "127.0.0.1:3000/" + custom_link;
+            const customLinkFull = "linkify.link/" + custom_link;
             totalCharsShortened = Math.abs(target_url.length - customLinkFull.length);
         }
         else
         {
-            const uuidLink = "127.0.0.1:3000/" + uuid;
+            const uuidLink = "linkify.link/" + uuid;
             totalCharsShortened = Math.abs(target_url.length - uuidLink.length);
         }
         //update the total characters shortened column for the user
