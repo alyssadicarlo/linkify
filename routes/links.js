@@ -11,9 +11,6 @@ const UsersModel = require("../models/Users");
 //create a router 
 const router = express.Router();
 
-//create clicksPerDay array - int array of size 7
-let clicksPerDay = [0,0,0,0,0,0,0];
-let charactersShortened = -1;
 
 function last7Days() {
     let daysAgo = []
@@ -27,17 +24,20 @@ function last7Days() {
 //GET dashboard
 router.get("/dashboard/:search?:sort?", async (req,res)=>{
 
-    //render dashboard page
     //Get the sort type selected, if none selected default to date_added
     let sort = req.query.sort;
     if(!sort)
     {
         sort = "date_added";
     }
-
+    //create clicksPerDay array - int array of size 7
+    let clicksPerDay = [0,0,0,0,0,0,0];
+    let charactersShortened = -1;
+    
     //Get total clicks for current user from the Clicks model
     const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
     const totalUserClicks = userClicksResponse.length;
+    
     //Get total characters shortened
     const totalCharsResponse = await UsersModel.getTotalCharactersShortened(req.session.user_id);
     
@@ -50,8 +50,6 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     //TOTAL CLICKS PER USER FOR THE LAST 7 DAY
     //FIRST ELEMENT IS TOTAL CLICKS FROM 7 DAYS AGO
     //LAST ELEMENT IS TOTACL CLICKS FROM TODAY
-
-
 
     //for each day in the past 7 days (ending with today), total up the number of clicks that have a date matching that day
     let lastSevenDays = [];
@@ -80,8 +78,6 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
     
     //assign that to the array
     let linkQueryData = null;
-
-    
 
     //if there is a search parameter
     if(!!req.query.search)
@@ -120,8 +116,6 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
             //add it to the linkData list
             linkData.push(newLinkModel);
         }
-        
-        //console.log(linkData);
 
         //render the template with the provided link data
         res.render("template", {
@@ -159,9 +153,9 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
         
 
         //Get total clicks for each link from the Clicks model
-
         //create LinkModel list linkData
         let linkData = [];
+
         //iterate through the returned link data 
         for(const link of linkQueryData) 
         {
@@ -217,6 +211,7 @@ router.get("/dashboard/:search?:sort?", async (req,res)=>{
 router.post("/add", async (req,res)=>{
     //get link URL from input form
     const {target_url} = req.body;
+
     //get user ID (if no user id from session, uID = 0)
     let userID = null;
     console.log(req.session.user_id);
@@ -232,6 +227,7 @@ router.post("/add", async (req,res)=>{
     //create UUID for link
     const uuid = nanoid(7);
     let url = "";
+
     //validate link
     if(target_url.substring(0,4) === "http")
     {
@@ -284,6 +280,7 @@ router.post("/add", async (req,res)=>{
 router.post("/custom_add", async (req,res)=>{
     //get link URL from input form
     const { custom_link, target_url, title } = req.body;
+    
     //get user ID (if no user id from session, uID = 0)
     let userID = null;
     if(req.session.is_logged_in === true)
@@ -333,6 +330,9 @@ router.post("/custom_add", async (req,res)=>{
         if (response.rowCount === 1) {
             res.redirect('/links/dashboard');
         } else {
+                //create clicksPerDay array - int array of size 7
+            let clicksPerDay = [0,0,0,0,0,0,0];
+            let charactersShortened = -1;
             const user_id = await req.session.user_id
             const linkData = await LinkModel.getBy(user_id, "date_added");
             const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
@@ -360,6 +360,9 @@ router.post("/custom_add", async (req,res)=>{
     else
     {
         console.log("This is not a valid URL!");
+            //create clicksPerDay array - int array of size 7
+        let clicksPerDay = [0,0,0,0,0,0,0];
+        let charactersShortened = -1;
         const user_id = await req.session.user_id
         const linkData = await LinkModel.getBy(user_id, "date_added");
         const userClicksResponse = await ClicksModel.getTotalUserClicks(req.session.user_id);
