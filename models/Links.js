@@ -161,7 +161,7 @@ class LinksModel {
                 const query = `
                     SELECT * FROM links
                     WHERE userID = ${user_id}
-                    AND target_url LIKE '%${parameter}%'
+                    AND target_url LIKE '%${search}%'
                     ORDER by date_added;
                     `
                 const response = await db.any(query);
